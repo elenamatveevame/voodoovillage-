@@ -1,0 +1,654 @@
+<meta charset="utf-8">
+<title>Voodoo Village Saturday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --panel:#F3F5F1;
+    --panel-2:#E9EDE6;
+    --ink:#141813;
+    --ink-2:#4A5346;
+    --ink-3:#6E7869;
+    --line:#DCE2D7;
+    --green:#2C6B42;
+    --green-soft:#EAF3EC;
+    --live:#C03A19;
+    --live-soft:#FDEDE7;
+    --gold:#8A6A12;
+    --gold-soft:#FBF3DC;
+    --sans:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+    --mono:"IBM Plex Mono","SF Mono",Menlo,monospace;
+    --disp:"Fraunces",Georgia,"Times New Roman",serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12150F; --panel:#1B1F17; --panel-2:#242A1F;
+      --ink:#F1F3EC; --ink-2:#BDC4B5; --ink-3:#8D9686;
+      --line:#2E3529;
+      --green:#8FC79E; --green-soft:#1E2A20;
+      --live:#FF8B5E; --live-soft:#301D14;
+      --gold:#D9BC6A; --gold-soft:#2A2416;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12150F; --panel:#1B1F17; --panel-2:#242A1F;
+    --ink:#F1F3EC; --ink-2:#BDC4B5; --ink-3:#8D9686;
+    --line:#2E3529;
+    --green:#8FC79E; --green-soft:#1E2A20;
+    --live:#FF8B5E; --live-soft:#301D14;
+    --gold:#D9BC6A; --gold-soft:#2A2416;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:480px;margin:0 auto;padding:0 16px 90px}
+  [hidden]{display:none!important}
+  button{font-family:inherit}
+
+  /* ---------- hero ---------- */
+  .hero{padding:22px 0 4px}
+  .kicker{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
+  .hero h1{font-family:var(--disp);font-weight:700;font-size:38px;line-height:1;margin:10px 0 0;letter-spacing:-.015em}
+  .subline{margin:9px 0 0;font-size:14px;color:var(--ink-2)}
+  .subline b{color:var(--ink);font-weight:600}
+
+  .rail{margin-top:16px}
+  .rail-track{position:relative;height:6px;border-radius:3px;background:var(--panel-2)}
+  .rail-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--green)}
+  .rail-head{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--live);
+    transform:translate(-50%,-50%);border:2px solid var(--bg)}
+  .rail-labels{display:flex;justify-content:space-between;margin-top:6px;
+    font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+
+  /* ---------- sticky bar ---------- */
+  .bar{position:sticky;top:0;z-index:30;background:var(--bg);padding:12px 0 10px;
+    border-bottom:1px solid var(--line);margin-bottom:8px}
+  .seg{display:flex;gap:3px;background:var(--panel);border-radius:11px;padding:4px}
+  .seg button{flex:1;appearance:none;border:0;background:transparent;color:var(--ink-2);
+    font-size:13px;font-weight:600;padding:10px 2px;border-radius:8px;cursor:pointer;white-space:nowrap}
+  .seg button[aria-selected="true"]{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(20,24,19,.16)}
+  .seg .cnt{font-family:var(--mono);font-size:11px;color:var(--gold)}
+  .seg button:focus-visible,.chip:focus-visible,.star:focus-visible,.blk:focus-visible,
+  .jump:focus-visible,.sheet-btn:focus-visible,.stage-head:focus-visible,#q:focus-visible{
+    outline:2px solid var(--live);outline-offset:2px}
+  .status{margin-top:9px;display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--live);flex:none;animation:pulse 2.2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  @media (prefers-reduced-motion:reduce){.pulse{animation:none}}
+
+  /* ---------- search ---------- */
+  #searchRow{margin:2px 0 10px}
+  #q{width:100%;appearance:none;background:var(--panel);border:1px solid transparent;border-radius:11px;
+    padding:12px 14px;font-family:var(--sans);font-size:15px;color:var(--ink)}
+  #q::placeholder{color:var(--ink-3)}
+
+  /* ---------- headings ---------- */
+  .group{display:flex;align-items:baseline;gap:10px;margin:24px 0 12px}
+  .group h2{margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-3);white-space:nowrap}
+  .group .hr{flex:1;height:1px;background:var(--line)}
+
+  /* ---------- NOW cards ---------- */
+  .card{border:1px solid var(--line);border-radius:12px;padding:14px 15px;margin-bottom:10px;background:var(--bg)}
+  .card.live{border-color:var(--live);border-left-width:4px;background:var(--live-soft)}
+  .card.idle{background:var(--panel)}
+  .card-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+  .sigil{width:17px;height:17px;flex:none;color:var(--green)}
+  .card.live .sigil{color:var(--live)}
+  .stage-name{font-family:var(--disp);font-size:15px;font-weight:600}
+  .host{font-size:12px;color:var(--ink-3)}
+  .flag{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--live)}
+  .artist{font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-.01em}
+  .artist.quiet{font-size:17px;font-weight:500;color:var(--ink-3)}
+  .b2b{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--green);padding:0 2px}
+  .prog{margin-top:11px;display:flex;align-items:center;gap:10px}
+  .prog-track{flex:1;height:5px;border-radius:3px;background:var(--panel-2);overflow:hidden}
+  .prog-fill{height:100%;background:var(--live)}
+  .prog-txt{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+  .meta-line{margin-top:8px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2)}
+  .meta-line b{color:var(--live);font-weight:600}
+  .next{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);
+    display:flex;gap:9px;align-items:baseline;font-size:14px}
+  .next .lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .next .t{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green)}
+  .next .n{font-weight:600}
+
+  /* ---------- GRID ---------- */
+  .grid-tools{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .grid-hint{font-size:12.5px;color:var(--ink-3)}
+  .jump{appearance:none;border:0;background:var(--live);color:#fff;border-radius:9px;
+    padding:9px 13px;font-size:13px;font-weight:600;cursor:pointer;margin-left:auto;white-space:nowrap}
+  .grid-wrap{overflow-x:auto;overflow-y:hidden;margin:0 -16px;padding:0 0 10px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .grow{display:flex;align-items:stretch}
+  .glabel{position:sticky;left:0;z-index:2;flex:none;width:112px;background:var(--bg);
+    border-right:1px solid var(--line);padding:0 6px 0 14px;display:flex;align-items:center;gap:6px}
+  .glabel .sigil{width:12px;height:12px}
+  .glabel span{font-size:10.5px;font-weight:700;letter-spacing:0;line-height:1.1}
+  .gtrack{position:relative;flex:none;height:100%}
+  .grow.axis{height:26px}
+  .grow.axis .glabel{border-right:1px solid var(--line)}
+  .axis-tick{position:absolute;top:6px;font-family:var(--mono);font-size:11px;color:var(--ink-3);
+    transform:translateX(-50%);white-space:nowrap}
+  .axis-tick.first{transform:none}
+  .axis-tick.last{transform:translateX(-100%)}
+  .grow.lane{height:46px;border-top:1px solid var(--line)}
+  .grow.lane .gtrack{background-image:repeating-linear-gradient(to right,var(--line) 0 1px,transparent 1px var(--hourpx))}
+  .gcap{position:sticky;left:0;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-3);padding:14px 16px 5px;width:min(100%,300px)}
+  .blk{position:absolute;top:5px;bottom:5px;border-radius:7px;border:1px solid var(--green);
+    background:var(--green-soft);color:var(--ink);padding:4px 6px;overflow:hidden;text-align:left;
+    cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:1px}
+  .blk b{font-size:11.5px;font-weight:600;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    display:block;width:100%}
+  .blk i{font-family:var(--mono);font-style:normal;font-size:9.5px;color:var(--ink-3);white-space:nowrap}
+  .blk.on{background:var(--live);border-color:var(--live);color:#fff}
+  .blk.on i{color:rgba(255,255,255,.85)}
+  .blk.done{opacity:.42}
+  .blk.star{box-shadow:inset 0 0 0 2px var(--gold)}
+  .nowline{position:absolute;top:0;bottom:0;width:2px;background:var(--live);z-index:1;pointer-events:none}
+  .nowflag{position:absolute;top:2px;transform:translateX(-50%);background:var(--live);color:#fff;
+    font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px;white-space:nowrap;z-index:3}
+
+  /* ---------- stage schedule ---------- */
+  .chips{display:flex;gap:7px;overflow-x:auto;padding:2px 16px 12px;margin:0 -16px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;appearance:none;background:var(--panel);border:1px solid transparent;color:var(--ink-2);
+    border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+  .stage-block{margin-bottom:22px}
+  .stage-head{width:100%;appearance:none;background:transparent;border:0;border-bottom:2px solid var(--ink);
+    display:flex;align-items:center;gap:9px;padding:0 0 9px;margin-bottom:2px;cursor:pointer;
+    color:var(--ink);text-align:left}
+  .stage-head .sigil{width:20px;height:20px}
+  .stage-head h3{margin:0;font-family:var(--disp);font-size:20px;font-weight:700;letter-spacing:-.01em}
+  .stage-head .host{margin-left:auto}
+  .chev{width:14px;height:14px;flex:none;color:var(--ink-3);transition:transform .18s}
+  .stage-block.closed .chev{transform:rotate(-90deg)}
+  @media (prefers-reduced-motion:reduce){.chev{transition:none}}
+  .stage-block.closed .sets{display:none}
+  .set{display:grid;grid-template-columns:58px 1fr 34px;gap:12px;align-items:start;
+    padding:13px 0 13px 10px;border-bottom:1px solid var(--line);border-left:4px solid transparent;margin-left:-14px}
+  .set.live{border-left-color:var(--live);background:var(--live-soft)}
+  .set.past .set-name,.set.past .set-time{color:var(--ink-3)}
+  .set-time{font-family:var(--mono);font-size:13px;font-weight:600;padding-top:2px}
+  .set-time span{display:block;color:var(--ink-3);font-weight:500}
+  .set.live .set-time{color:var(--live)}
+  .set-name{font-size:17px;font-weight:600;line-height:1.25}
+  .set-sub{font-size:13px;color:var(--ink-2);margin-top:2px}
+  .set-where{font-size:12px;color:var(--green);font-weight:600;margin-top:2px}
+  .badge{display:inline-block;margin-left:7px;font-size:10px;font-weight:700;letter-spacing:.09em;
+    text-transform:uppercase;background:var(--green-soft);color:var(--green);border-radius:4px;
+    padding:3px 6px;vertical-align:2px;white-space:nowrap}
+  .badge.gold{background:var(--gold-soft);color:var(--gold)}
+  .badge.now{background:var(--live);color:#fff}
+  .star{appearance:none;background:transparent;border:0;cursor:pointer;color:var(--ink-3);
+    width:34px;height:34px;font-size:19px;line-height:1;padding:0}
+  .star[aria-pressed="true"]{color:var(--gold)}
+
+  /* ---------- my night ---------- */
+  .plan-item{display:grid;grid-template-columns:58px 1fr 34px;gap:12px;align-items:start;
+    padding:14px 0 14px 10px;border-left:4px solid var(--green);border-bottom:1px solid var(--line);margin-left:-14px}
+  .plan-item.live{border-left-color:var(--live);background:var(--live-soft)}
+  .plan-item.past{border-left-color:var(--line)}
+  .plan-item.past .set-name,.plan-item.past .set-time{color:var(--ink-3)}
+  .clash{display:flex;gap:8px;align-items:flex-start;margin:6px 0 0;padding:9px 11px;border-radius:9px;
+    background:var(--live-soft);color:var(--live);font-size:12.5px;font-weight:600;line-height:1.35}
+  .gap{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);padding:8px 0 8px 10px;margin-left:-14px}
+  .empty{text-align:center;padding:38px 18px;color:var(--ink-3);font-size:16px;line-height:1.5}
+  .note{margin:14px 0 0;padding:13px 14px;border-radius:11px;background:var(--panel);
+    font-size:14px;color:var(--ink-2);line-height:1.5}
+  .note b{color:var(--ink)}
+
+  /* ---------- sheet ---------- */
+  .backdrop{position:fixed;inset:0;background:rgba(10,14,9,.5);z-index:50;display:flex;align-items:flex-end;
+    justify-content:center}
+  .sheet{width:100%;max-width:480px;background:var(--bg);border-radius:16px 16px 0 0;padding:20px 18px 26px;
+    border-top:3px solid var(--live)}
+  .sheet .where{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
+  .sheet h4{margin:8px 0 0;font-size:25px;font-weight:700;line-height:1.15;letter-spacing:-.01em}
+  .sheet .when{margin-top:8px;font-family:var(--mono);font-size:14px;color:var(--ink-2)}
+  .sheet-actions{display:flex;gap:9px;margin-top:18px}
+  .sheet-btn{flex:1;appearance:none;border:1px solid var(--line);background:var(--bg);color:var(--ink);
+    border-radius:11px;padding:14px;font-size:15px;font-weight:600;cursor:pointer}
+  .sheet-btn.primary{background:var(--gold);border-color:var(--gold);color:#fff}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sheet-btn.primary{color:#12150F}}
+  :root[data-theme="dark"] .sheet-btn.primary{color:#12150F}
+
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:13px;color:var(--ink-3);line-height:1.6}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">Voodoo Village 2026 · Grimbergen</div>
+    <h1>Saturday 12 September</h1>
+    <p class="subline"><b>10 stages</b> · <b>57 sets</b> · 15:00 → 01:00 · all times Brussels</p>
+    <div class="rail">
+      <div class="rail-track"><div class="rail-fill" id="railFill"></div><div class="rail-head" id="railHead"></div></div>
+      <div class="rail-labels"><span>15:00</span><span>18:00</span><span>21:00</span><span>01:00</span></div>
+    </div>
+  </header>
+
+  <nav class="bar">
+    <div class="seg" role="tablist" aria-label="View">
+      <button role="tab" aria-selected="true" data-view="now">Now</button>
+      <button role="tab" aria-selected="false" data-view="grid">Grid</button>
+      <button role="tab" aria-selected="false" data-view="stages">Stages</button>
+      <button role="tab" aria-selected="false" data-view="mine">Mine <span class="cnt" id="pickCount">0</span></button>
+    </div>
+    <div class="status"><i class="pulse" id="pulse"></i><span id="clock">Loading…</span></div>
+  </nav>
+
+  <div id="searchRow" hidden>
+    <input id="q" type="search" placeholder="Search artist or stage" autocomplete="off">
+  </div>
+
+  <main id="view"></main>
+
+  <footer>
+    From the official Saturday timetable. Set times can shift on the day — trust the stage, not the minute.<br>
+    Tap ★ to build your night; picks are saved on this phone only.
+  </footer>
+</div>
+
+<div class="backdrop" id="sheet" hidden></div>
+
+<script>
+const SIGILS = {
+  labyrinth:'<path d="M12 12.5a1.6 1.6 0 1 1 1.6-1.6M12 16a5 5 0 1 1 5-5M12 19.5a8.5 8.5 0 1 1 8.5-8.5v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  spiral:'<path d="M12 12a2 2 0 1 1 2-2M12 16.5A6.5 6.5 0 1 1 18.5 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5.5 10A6.5 6.5 0 0 1 12 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M6 19.5h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  triangle:'<path d="M12 4.5 20 18H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.6 12.4h6.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  star:'<path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+  coil:'<path d="M7 5h10M5.5 9h13M7 13h10M8.5 17h7M10 21h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  cross:'<path d="M12 3v18M7 8h10M8.5 15h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  waves:'<path d="M3 9c2.5-2.5 5-2.5 7.5 0S15.5 11.5 18 9M3 15c2.5-2.5 5-2.5 7.5 0s5 2.5 7.5 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  sun:'<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2 2M16.7 16.7l2 2M18.7 5.3l-2 2M7.3 16.7l-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+  figure:'<circle cx="12" cy="5" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.4v6.4M6.5 10.5 12 9l5.5 1.5M9 20l3-6.2 3 6.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+  burst:'<circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3.4M12 18.6V22M2 12h3.4M18.6 12H22M4.9 4.9l2.4 2.4M16.7 16.7l2.4 2.4M19.1 4.9l-2.4 2.4M7.3 16.7l-2.4 2.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>'
+};
+const CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+const GROUPS = [
+  {id:'floors', label:'Dancefloors'},
+  {id:'corners', label:'Bars & corners'},
+  {id:'mind', label:'Body & mind'}
+];
+
+const STAGES = [
+  {id:'forest', name:'The Forest', short:'Forest', group:'floors', sigil:'labyrinth', sets:[
+    {a:'Odrik', s:'15:00', e:'17:00'},
+    {a:'BLCK Mamba', s:'17:00', e:'18:30'},
+    {a:'Carlita', s:'18:30', e:'20:30'},
+    {a:'Omri.', s:'20:30', e:'22:30'},
+    {a:'DJ Tennis', b:'Mita Gami', s:'22:30', e:'01:00'}
+  ]},
+  {id:'yard', name:'The Yard', short:'Yard', group:'floors', sigil:'spiral', sets:[
+    {a:'Luna & Lenthe', s:'15:00', e:'17:00'},
+    {a:'Stasi Sanlin', s:'17:00', e:'18:30'},
+    {a:'NOHR', s:'18:30', e:'19:30', tag:'Live'},
+    {a:'Maxi Meraki', b:'Son of Son', s:'19:30', e:'21:30'},
+    {a:'Agents Of Time', s:'21:30', e:'23:00'},
+    {a:'Mathame', s:'23:00', e:'01:00'}
+  ]},
+  {id:'shelter', name:'The Shelter', short:'Shelter', group:'floors', sigil:'triangle', sets:[
+    {a:'Amalie', s:'15:00', e:'17:00'},
+    {a:'Thelma', s:'17:00', e:'19:00'},
+    {a:'Marrøn', s:'19:00', e:'21:00'},
+    {a:'Elli Acula', s:'21:00', e:'22:30'},
+    {a:'Len Faki', b:'Quest', s:'22:30', e:'01:00'}
+  ]},
+  {id:'oracle', name:'The Oracle', short:'Oracle', group:'floors', sigil:'star', sets:[
+    {a:'Opening Ceremony', s:'15:00', e:'16:30'},
+    {a:'Mushina', s:'16:30', e:'18:00', tag:'Live'},
+    {a:'Ginton', s:'18:00', e:'19:15'},
+    {a:'CØPAL', s:'19:15', e:'20:30', tag:'Hybrid live'},
+    {a:'Jarl Flamar', s:'20:30', e:'22:00'},
+    {a:'Sinego', s:'22:00', e:'23:30', tag:'Timbales DJ set'},
+    {a:'Deer Jade', s:'23:30', e:'01:00'}
+  ]},
+  {id:'observatory', name:'The Observatory', short:'Observatory', group:'floors', sigil:'coil',
+   host:'Helena Lauwaert & Friends', sets:[
+    {a:'Stanislawa', s:'15:00', e:'17:00'},
+    {a:'Miamor', s:'17:00', e:'18:30'},
+    {a:'Sam Alfred', s:'18:30', e:'20:30'},
+    {a:'Young Marco', s:'20:30', e:'22:30'},
+    {a:'Helena Lauwaert', b:'Saidah', s:'22:30', e:'01:00'}
+  ]},
+  {id:'glasshouse', name:'The Glasshouse', short:'Glasshouse', group:'corners', sigil:'cross',
+   host:'Aperol Spritz', sets:[
+    {a:'Lexx', s:'15:00', e:'17:00'},
+    {a:'Christian 82', s:'17:00', e:'19:00'},
+    {a:'Florist', s:'19:00', e:'21:00'},
+    {a:'Rode', s:'21:00', e:'23:00'},
+    {a:'Bastin', s:'23:00', e:'01:00'}
+  ]},
+  {id:'calypso', name:'Calypso', short:'Calypso', group:'corners', sigil:'figure', sets:[
+    {a:'Andy Roasters', s:'15:00', e:'17:15'},
+    {a:'DJ Rik De Bruycker', s:'17:15', e:'19:30'},
+    {a:'nwhr.world', s:'19:30', e:'20:45'},
+    {a:'KMSKA', s:'20:45', e:'23:00'},
+    {a:'La Nuyt', s:'23:00', e:'01:00'}
+  ]},
+  {id:'roadshow', name:'The Roadshow', short:'Roadshow', group:'corners', sigil:'burst',
+   host:'Criss Cross Club', sets:[
+    {a:'Mika Somoza', s:'16:00', e:'17:30'},
+    {a:'justsaygeorge!', s:'17:30', e:'19:00'},
+    {a:'Vitucci', s:'19:00', e:'20:30'},
+    {a:'Criss Cross Collective', s:'20:30', e:'23:00'}
+  ]},
+  {id:'oasis', name:'The Oasis', short:'Oasis', group:'mind', sigil:'waves', sets:[
+    {a:'Ikigaia', sub:'Flower tie dye', s:'15:15', e:'16:30'},
+    {a:'The Ridge', sub:'Breathwork', s:'16:30', e:'17:30'},
+    {a:'Healing Soundwaves', sub:'with Charlotte', s:'17:30', e:'18:30'},
+    {a:'Home of Shivay', sub:'Psychedelic breathwork', s:'18:30', e:'19:30'},
+    {a:'Intuitive Body Art', sub:'A journey back to yourself', s:'19:30', e:'20:30'},
+    {a:'Journeys with Silvia', s:'20:30', e:'21:30'}
+  ]},
+  {id:'orphica', name:'Orphica', short:'Orphica', group:'mind', sigil:'sun', sets:[
+    {a:'Piekerwonder & Bodypaint Lab', sub:'Opening Orphica', s:'15:40', e:'16:00'},
+    {a:'Alex Tambu', s:'16:10', e:'16:50'},
+    {a:'Ategha en Agnes', s:'17:00', e:'17:30'},
+    {a:'Ferre & Bruna', s:'17:40', e:'18:10'},
+    {a:'Jazz Sanusi', s:'18:20', e:'18:45'},
+    {a:'Pommelien', s:'18:55', e:'19:10'},
+    {a:'Primavera', s:'19:20', e:'20:00'},
+    {a:'Matthy Joffrey and Mara', s:'20:10', e:'20:50'},
+    {a:'Blue', s:'21:00', e:'21:20'},
+    {a:'Melody Van Gompel', s:'21:30', e:'22:00'},
+    {a:'Lyna', s:'22:10', e:'22:40'}
+  ]}
+];
+
+const DAY_START = 15*60, DAY_END = 25*60;
+const PX_MIN = 2.1, HOUR_PX = PX_MIN*60, TRACK_W = (DAY_END-DAY_START)*PX_MIN;
+const toMin = t => {const [h,m] = t.split(':').map(Number); return (h<6?h+24:h)*60+m};
+const BY_KEY = {};
+STAGES.forEach(st => st.sets.forEach(x => {
+  x.sm = toMin(x.s); x.em = toMin(x.e); x.key = st.id+'|'+x.s; x.stage = st; BY_KEY[x.key] = x;
+}));
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const svg = k => '<svg class="sigil" viewBox="0 0 24 24" aria-hidden="true">'+SIGILS[k]+'</svg>';
+const fmt = m => String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const dur = m => m>=60 ? Math.floor(m/60)+'h'+(m%60 ? ' '+(m%60)+'m' : '') : m+'m';
+const plain = x => x.a + (x.b ? ' b2b '+x.b : '');
+
+function brussels(){
+  const p = new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Brussels',year:'numeric',month:'2-digit',
+    day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  const g = t => +p.find(x => x.type === t).value;
+  return {y:g('year'), mo:g('month'), d:g('day'), h:g('hour')%24, mi:g('minute')};
+}
+function festNow(){
+  const b = brussels(), mins = b.h*60+b.mi;
+  if(b.y===2026 && b.mo===9 && b.d===12) return {min:mins, clock:mins};
+  if(b.y===2026 && b.mo===9 && b.d===13 && b.h<6) return {min:mins+1440, clock:mins};
+  return {min:null, clock:mins};
+}
+
+let picks = new Set();
+try{ picks = new Set(JSON.parse(localStorage.getItem('vv26sat')||'[]')) }catch(e){}
+const savePicks = () => { try{ localStorage.setItem('vv26sat',JSON.stringify([...picks])) }catch(e){} };
+
+let view = 'now', stageFilter = 'all', query = '', closed = new Set(), gridScroll = null, openKey = null;
+
+const tagHTML = x => x.tag ? '<span class="badge'+(x.tag==='Live'?'':' gold')+'">'+esc(x.tag)+'</span>' : '';
+const nameHTML = x => esc(x.a) + (x.b ? ' <span class="b2b">b2b</span> '+esc(x.b) : '');
+const starHTML = x => {
+  const on = picks.has(x.key);
+  return '<button class="star" data-key="'+x.key+'" aria-pressed="'+on+'" aria-label="'+
+    (on?'Remove ':'Save ')+esc(plain(x))+'">'+(on?'★':'☆')+'</button>';
+};
+
+/* ---------------- NOW ---------------- */
+function renderNow(t){
+  const now = t.min;
+  let h = '';
+  if(now === null) h += '<div class="note"><b>Saturday\'s full running order.</b> Live highlighting switches on during the festival day.</div>';
+  else if(now < DAY_START) h += '<div class="note"><b>Gates at 15:00.</b> First sets start in '+dur(DAY_START-now)+'. Here is who opens each stage.</div>';
+  else if(now >= DAY_END) h += '<div class="note"><b>Saturday is done.</b> This is how the night ran.</div>';
+
+  GROUPS.forEach(g => {
+    h += '<div class="group"><h2>'+g.label+'</h2><div class="hr"></div></div>';
+    STAGES.filter(s => s.group === g.id).forEach(st => {
+      const cur = now === null ? null : st.sets.find(x => now >= x.sm && now < x.em);
+      const nxt = st.sets.find(x => now === null ? true : x.sm > now);
+      const finished = now !== null && now >= st.sets[st.sets.length-1].em;
+      h += '<article class="card'+(cur ? ' live' : (finished ? ' idle' : ''))+'">';
+      h += '<div class="card-top">'+svg(st.sigil)+'<span class="stage-name">'+esc(st.name)+'</span>'+
+           (st.host ? '<span class="host">'+esc(st.host)+'</span>' : '')+
+           (cur ? '<span class="flag"><i class="pulse"></i>On now</span>' : '')+'</div>';
+      if(cur){
+        h += '<div class="artist">'+nameHTML(cur)+tagHTML(cur)+'</div>';
+        const pct = Math.round((now-cur.sm)/(cur.em-cur.sm)*100);
+        h += '<div class="prog"><div class="prog-track"><div class="prog-fill" style="width:'+pct+'%"></div></div>'+
+             '<span class="prog-txt">'+dur(cur.em-now)+' left</span></div>';
+        if(nxt) h += '<div class="next"><span class="lbl">Next</span><span class="t">'+nxt.s+
+             '</span><span class="n">'+nameHTML(nxt)+'</span></div>';
+      }else if(finished){
+        h += '<div class="artist quiet">Finished for tonight</div>';
+      }else if(nxt){
+        h += '<div class="artist">'+nameHTML(nxt)+tagHTML(nxt)+'</div>';
+        const wait = now !== null && now >= DAY_START ? ' · <b>in '+dur(nxt.sm-now)+'</b>' : '';
+        h += '<div class="meta-line">'+nxt.s+' – '+nxt.e+wait+'</div>';
+      }
+      h += '</article>';
+    });
+  });
+  return h;
+}
+
+/* ---------------- GRID ---------------- */
+function renderGrid(t){
+  const now = t.min;
+  const live = now !== null && now >= DAY_START && now < DAY_END;
+  const nowX = live ? (now-DAY_START)*PX_MIN : null;
+
+  let h = '<div class="grid-tools"><span class="grid-hint">Scroll sideways · tap a set for details</span>'+
+    (live ? '<button class="jump" id="jumpNow">Jump to now</button>' : '')+'</div>';
+
+  h += '<div class="grid-wrap" id="gridWrap" style="--hourpx:'+HOUR_PX+'px"><div style="width:'+(112+TRACK_W)+'px">';
+
+  h += '<div class="grow axis"><div class="glabel"></div><div class="gtrack" style="width:'+TRACK_W+'px">';
+  for(let m = DAY_START; m <= DAY_END; m += 60){
+    const cls = m === DAY_START ? ' first' : m === DAY_END ? ' last' : '';
+    h += '<span class="axis-tick'+cls+'" style="left:'+((m-DAY_START)*PX_MIN)+'px">'+fmt(m)+'</span>';
+  }
+  if(live) h += '<span class="nowflag" style="left:'+nowX+'px">'+fmt(now)+'</span>';
+  h += '</div></div>';
+
+  GROUPS.forEach(g => {
+    h += '<div class="gcap">'+g.label+'</div>';
+    STAGES.filter(s => s.group === g.id).forEach(st => {
+      h += '<div class="grow lane"><div class="glabel">'+svg(st.sigil)+'<span>'+esc(st.short)+'</span></div>'+
+           '<div class="gtrack" style="width:'+TRACK_W+'px">';
+      st.sets.forEach(x => {
+        const on = now !== null && now >= x.sm && now < x.em;
+        const done = now !== null && now >= x.em;
+        const left = (x.sm-DAY_START)*PX_MIN, w = (x.em-x.sm)*PX_MIN;
+        h += '<button class="blk'+(on?' on':'')+(done?' done':'')+(picks.has(x.key)?' star':'')+
+             '" data-key="'+x.key+'" style="left:'+left+'px;width:'+(w-3)+'px">'+
+             '<b>'+esc(plain(x))+'</b>'+(w > 92 ? '<i>'+x.s+'–'+x.e+'</i>' : '')+'</button>';
+      });
+      if(live) h += '<div class="nowline" style="left:'+nowX+'px"></div>';
+      h += '</div></div>';
+    });
+  });
+  h += '</div></div>';
+  h += '<div class="note">Bars that line up vertically are running at the same time. '+
+       'Red = playing right now, gold outline = your pick.</div>';
+  return h;
+}
+
+/* ---------------- STAGES ---------------- */
+function matches(x, st){
+  if(!query) return true;
+  const q = query.toLowerCase();
+  return plain(x).toLowerCase().includes(q) || st.name.toLowerCase().includes(q) ||
+         (x.sub||'').toLowerCase().includes(q);
+}
+function renderStages(t){
+  const now = t.min;
+  let h = '<div class="chips"><button class="chip" data-stage="all" aria-pressed="'+(stageFilter==='all')+'">All stages</button>';
+  STAGES.forEach(s => { h += '<button class="chip" data-stage="'+s.id+'" aria-pressed="'+(stageFilter===s.id)+'">'+esc(s.short)+'</button>' });
+  h += '</div>';
+  let found = 0;
+  STAGES.forEach(st => {
+    if(stageFilter !== 'all' && stageFilter !== st.id) return;
+    const sets = st.sets.filter(x => matches(x, st));
+    if(!sets.length) return;
+    found += sets.length;
+    const shut = closed.has(st.id) && !query;
+    h += '<section class="stage-block'+(shut?' closed':'')+'">'+
+         '<button class="stage-head" data-toggle="'+st.id+'" aria-expanded="'+(!shut)+'">'+
+         svg(st.sigil)+'<h3>'+esc(st.name)+'</h3>'+
+         (st.host ? '<span class="host">'+esc(st.host)+'</span>' : '')+CHEV+'</button><div class="sets">';
+    sets.forEach(x => {
+      const on = now !== null && now >= x.sm && now < x.em;
+      const past = now !== null && now >= x.em;
+      h += '<div class="set'+(on?' live':'')+(past?' past':'')+'">'+
+           '<div class="set-time">'+x.s+'<span>'+x.e+'</span></div>'+
+           '<div><div class="set-name">'+nameHTML(x)+tagHTML(x)+(on?'<span class="badge now">On now</span>':'')+'</div>'+
+           (x.sub ? '<div class="set-sub">'+esc(x.sub)+'</div>' : '')+'</div>'+
+           starHTML(x)+'</div>';
+    });
+    h += '</div></section>';
+  });
+  if(!found) h += '<div class="empty">Nothing matches “'+esc(query)+'”.</div>';
+  return h;
+}
+
+/* ---------------- MY NIGHT ---------------- */
+function renderMine(t){
+  const now = t.min;
+  const list = [...picks].map(k => BY_KEY[k]).filter(Boolean).sort((a,b) => a.sm-b.sm);
+  if(!list.length){
+    return '<div class="empty">Your night is empty.<br>Tap ★ next to any set — in Stages, or on a bar in Grid — and it lands here in order, with a warning when two picks overlap.</div>';
+  }
+  let h = '<div class="note"><b>'+list.length+' sets picked.</b> Overlaps are flagged so you know where you have to choose.</div>';
+  list.forEach((x, i) => {
+    const on = now !== null && now >= x.sm && now < x.em;
+    const past = now !== null && now >= x.em;
+    const clashes = list.filter(o => o !== x && o.sm < x.em && x.sm < o.em);
+    const prev = list[i-1];
+    if(prev && prev.em <= x.sm && x.sm - prev.em > 0)
+      h += '<div class="gap">'+dur(x.sm - prev.em)+' free · '+esc(prev.stage.short)+' → '+esc(x.stage.short)+'</div>';
+    h += '<div class="plan-item'+(on?' live':'')+(past?' past':'')+'">'+
+         '<div class="set-time">'+x.s+'<span>'+x.e+'</span></div>'+
+         '<div><div class="set-name">'+nameHTML(x)+tagHTML(x)+(on?'<span class="badge now">On now</span>':'')+'</div>'+
+         '<div class="set-where">'+esc(x.stage.name)+'</div>'+
+         (clashes.length ? '<div class="clash">⚠ Overlaps '+clashes.map(c => esc(plain(c))+' ('+esc(c.stage.short)+')').join(', ')+'</div>' : '')+
+         '</div>'+starHTML(x)+'</div>';
+  });
+  return h;
+}
+
+/* ---------------- sheet ---------------- */
+function openSheet(key){
+  openKey = key;
+  const x = BY_KEY[key];
+  const on = picks.has(key);
+  document.getElementById('sheet').innerHTML =
+    '<div class="sheet" role="dialog" aria-modal="true" aria-label="'+esc(plain(x))+'">'+
+    '<div class="where">'+esc(x.stage.name)+(x.stage.host ? ' · '+esc(x.stage.host) : '')+'</div>'+
+    '<h4>'+nameHTML(x)+tagHTML(x)+'</h4>'+
+    '<div class="when">'+x.s+' – '+x.e+' · '+dur(x.em-x.sm)+(x.sub ? ' · '+esc(x.sub) : '')+'</div>'+
+    '<div class="sheet-actions">'+
+      '<button class="sheet-btn" data-close>Close</button>'+
+      '<button class="sheet-btn primary" data-toggle-pick>'+(on ? '★ In my night' : '☆ Add to my night')+'</button>'+
+    '</div></div>';
+  document.getElementById('sheet').hidden = false;
+}
+function closeSheet(){ openKey = null; document.getElementById('sheet').hidden = true }
+
+/* ---------------- render ---------------- */
+function render(){
+  const t = festNow();
+  const live = t.min !== null && t.min >= DAY_START && t.min < DAY_END;
+  document.getElementById('pulse').hidden = !live;
+  document.getElementById('clock').textContent =
+    t.min === null ? 'Full timetable · Brussels time'
+    : live ? fmt(t.clock)+' in Brussels · live now'
+    : t.min < DAY_START ? fmt(t.clock)+' in Brussels · '+dur(DAY_START-t.min)+' to gates'
+    : fmt(t.clock)+' in Brussels · festival over';
+
+  const pos = t.min === null ? 0 : Math.min(100, Math.max(0, (t.min-DAY_START)/(DAY_END-DAY_START)*100));
+  document.getElementById('railFill').style.width = pos+'%';
+  const head = document.getElementById('railHead');
+  head.style.left = pos+'%';
+  head.hidden = !live;
+  document.getElementById('pickCount').textContent = picks.size;
+  document.getElementById('searchRow').hidden = view !== 'stages';
+
+  const prev = document.getElementById('gridWrap');
+  if(prev) gridScroll = prev.scrollLeft;
+
+  document.getElementById('view').innerHTML =
+    view === 'now' ? renderNow(t) : view === 'grid' ? renderGrid(t) :
+    view === 'stages' ? renderStages(t) : renderMine(t);
+
+  if(view === 'grid'){
+    const w = document.getElementById('gridWrap');
+    if(w) w.scrollLeft = gridScroll !== null ? gridScroll
+      : (live ? Math.max(0, (t.min-DAY_START)*PX_MIN - 60) : 0);
+  }
+}
+
+function scrollToNow(){
+  const t = festNow(), w = document.getElementById('gridWrap');
+  if(!w || t.min === null) return;
+  w.scrollTo({left: Math.max(0, (t.min-DAY_START)*PX_MIN - 60), behavior:'smooth'});
+  gridScroll = null;
+}
+function togglePick(k){
+  picks.has(k) ? picks.delete(k) : picks.add(k);
+  savePicks();
+  document.getElementById('pickCount').textContent = picks.size;
+}
+
+document.querySelectorAll('.seg button').forEach(b => {
+  b.addEventListener('click', () => {
+    view = b.dataset.view;
+    if(view === 'grid') gridScroll = null;
+    document.querySelectorAll('.seg button').forEach(o => o.setAttribute('aria-selected', String(o === b)));
+    render();
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+document.getElementById('q').addEventListener('input', e => { query = e.target.value.trim(); render() });
+
+document.getElementById('view').addEventListener('click', e => {
+  const st = e.target.closest('.star');
+  if(st){ togglePick(st.dataset.key); render(); return }
+  const blk = e.target.closest('.blk');
+  if(blk){ openSheet(blk.dataset.key); return }
+  const ch = e.target.closest('.chip');
+  if(ch){ stageFilter = ch.dataset.stage; render(); return }
+  const tg = e.target.closest('[data-toggle]');
+  if(tg){ const id = tg.dataset.toggle; closed.has(id) ? closed.delete(id) : closed.add(id); render(); return }
+  if(e.target.closest('#jumpNow')) scrollToNow();
+});
+
+document.getElementById('sheet').addEventListener('click', e => {
+  if(e.target.id === 'sheet' || e.target.closest('[data-close]')) return closeSheet();
+  if(e.target.closest('[data-toggle-pick]')){
+    const k = openKey;
+    togglePick(k);
+    closeSheet();
+    render();
+  }
+});
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && openKey) closeSheet() });
+
+render();
+setInterval(render, 30000);
+</script>
