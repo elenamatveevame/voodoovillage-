@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -148,7 +147,36 @@
   .onair{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;
     letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--live);
     border-radius:5px;padding:3px 7px}
-  .card .star{margin-left:auto}
+  .card-actions{margin-left:auto;display:flex;align-items:center;gap:2px}
+  .hereb{appearance:none;border:1px solid var(--line);background:var(--bg);color:var(--ink-3);
+    width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;flex:none}
+  .hereb.on{background:var(--green);border-color:var(--green);color:var(--bg)}
+  .hereb svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;
+    stroke-linecap:round;stroke-linejoin:round}
+  .crewhere{margin-top:10px;display:flex;align-items:center;gap:6px;font-size:13.5px;
+    font-weight:600;color:var(--green);line-height:1.3}
+  .crewhere svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;
+    stroke-linecap:round;stroke-linejoin:round}
+  .nudge{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:12px 0 0;padding:12px 14px;
+    border-radius:12px;background:var(--gold-soft);font-size:13.5px;color:var(--ink-2)}
+  .nudge b{color:var(--ink)}
+  .nudge .minibtn{margin-left:auto}
+  .nudge .minibtn + .minibtn{margin-left:0}
+  .soonbar{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:var(--gold-soft);
+    color:var(--ink);font-size:14px;line-height:1.35;cursor:pointer}
+  .soonbar b{font-weight:700}
+  .switchrow{display:flex;align-items:center;gap:12px;margin:12px 0 4px;padding:13px 14px;
+    border-radius:12px;background:var(--panel)}
+  .switchrow b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+  .switchrow span{display:block;font-size:12.5px;color:var(--ink-3);line-height:1.35;margin-top:2px}
+  .switch{flex:none;appearance:none;border:0;width:50px;height:30px;border-radius:15px;
+    background:var(--panel-2);cursor:pointer;padding:3px;display:flex;align-items:center}
+  .switch i{display:block;width:24px;height:24px;border-radius:50%;background:var(--bg);
+    box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .16s}
+  .switch[aria-checked="true"]{background:var(--green)}
+  .switch[aria-checked="true"] i{transform:translateX(20px)}
+  @media (prefers-reduced-motion:reduce){.switch i{transition:none}}
   .body{padding-right:7px}
   .artist{font-size:21px;font-weight:700;line-height:1.15;letter-spacing:-.01em;margin-top:4px}
   .artist.quiet{font-size:16px;font-weight:500;color:var(--ink-3)}
@@ -357,6 +385,8 @@
     </div>
     <div class="scrub-labels" id="scrubLabels"></div>
   </div>
+
+  <div id="soonWrap"></div>
 
   <div id="searchRow" hidden>
     <input id="q" type="search" placeholder="Search artist or stage" autocomplete="off">
@@ -769,6 +799,7 @@ function renderNow(t){
   if(now === null) h += '<div class="note"><b>The full running order for '+esc(day.title)+'.</b> Live highlighting switches on during that day.</div>';
   else if(now < day.sm) h += '<div class="note"><b>Gates at '+day.start+'.</b> First sets start in '+dur(day.sm-now)+'. Here is who opens each stage.</div>';
   else if(now >= day.em) h += '<div class="note"><b>'+esc(day.title)+' is done.</b> This is how the night ran.</div>';
+  h += nudge();
 
   GROUPS.forEach(g => {
     h += '<div class="group"><h2>'+g.label+'</h2><div class="hr"></div></div>';
@@ -779,9 +810,13 @@ function renderNow(t){
       const focus = cur || (finished ? null : nxt);
       h += '<article class="card'+(cur ? ' live' : (finished ? ' idle' : ''))+'"'+
            (focus ? ' data-key="'+focus.key+'"' : '')+'>';
+      const iAmHere = crew && crewData[crew.id] && crewData[crew.id].stage === st.id;
       h += '<div class="card-top">'+svg(st.sigil)+'<span class="stage-name">'+esc(st.name)+'</span>'+
            (cur ? '<span class="onair">On now</span>' : '')+
-           (focus ? starHTML(focus) : '')+'</div>';
+           '<span class="card-actions">'+
+           (crew ? '<button class="hereb'+(iAmHere ? ' on' : '')+'" data-place="'+st.id+
+             '" aria-pressed="'+!!iAmHere+'" aria-label="I am at '+esc(st.name)+'">'+PIN+'</button>' : '')+
+           (focus ? starHTML(focus) : '')+'</span></div>';
       h += '<div class="body">';
       if(st.host) h += '<div class="host">'+esc(st.host)+'</div>';
       if(cur){
@@ -798,6 +833,9 @@ function renderNow(t){
         const wait = now !== null && now >= day.sm ? ' · <b>in '+dur(nxt.sm-now)+'</b>' : '';
         h += '<div class="meta-line">'+nxt.s+' – '+nxt.e+wait+'</div>';
       }
+      const others = crewAt(st.id);
+      if(others.length) h += '<div class="crewhere">'+PIN+esc(others.map(m => m.name).join(', '))+
+        (others.length === 1 ? ' is here' : ' are here')+'</div>';
       h += '</div></article>';
     });
   });
@@ -886,7 +924,9 @@ function renderMine(){
   if(!all.length){
     return '<div class="empty">Your plan is empty.<br><br>Tap ★ on any set — in Stages, in Now, or on a bar in Grid — and it lands here in order, with a warning whenever two picks overlap.</div>';
   }
-  let h = '';
+  let h = '<div class="switchrow"><div><b>Remind me '+LEAD+' minutes before</b>'+
+    '<span>Pops up while the app is open. A locked phone will not wake for it.</span></div>'+
+    '<button class="switch" id="alertToggle" role="switch" aria-checked="'+alertsOn+'"><i></i></button></div>';
   DAYS.forEach(d => {
     const list = all.filter(x => x.day === d).sort((a,b) => a.sm-b.sm);
     if(!list.length) return;
@@ -955,14 +995,13 @@ const EXTRA_PLACES = [
   {id:'wandering', name:'Wandering'},
   {id:'bar', name:'At the bar'},
   {id:'food', name:'Food'},
-  {id:'chill', name:'Chilling'},
   {id:'home', name:'Heading home'}
 ];
-const CODE_CHARS = 'ACDEFGHJKLMNPQRTUVWXY3479';
+const PIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s6.8-5.9 6.8-10.8a6.8 6.8 0 1 0-13.6 0C5.2 15.1 12 21 12 21z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+const DEFAULT_ROOM = 'voodoo26';
 const FRESH = 90*60*1000;
 const uid = () => (crypto.randomUUID ? crypto.randomUUID()
   : String(Date.now())+Math.random().toString(16).slice(2));
-const newCode = () => Array.from({length:5}, () => CODE_CHARS[Math.floor(Math.random()*CODE_CHARS.length)]).join('');
 function ago(ts){
   const m = Math.round((Date.now()-ts)/60000);
   if(m < 1) return 'just now';
@@ -990,7 +1029,7 @@ function placeName(id){
 let fbReady = false, fbError = '';
 let crew = store.get('vv26crew', null);
 let crewData = {}, crewRef = null;
-let crewName = crew ? crew.name : store.get('vv26name', ''), joinCode = '';
+let crewName = crew ? crew.name : store.get('vv26name', ''), joinCode = '', inviteCode = '';
 
 function fbInit(){
   if(fbReady) return true;
@@ -1013,10 +1052,31 @@ function crewAttach(){
   try{
     if(crewRef) crewRef.off();
     crewRef = firebase.database().ref('rooms/'+crew.code+'/members');
-    crewRef.on('value',
-      snap => { crewData = snap.val() || {}; updateCrewPip(); if(view === 'crew') render() },
-      () => { fbError = 'denied'; if(view === 'crew') render() });
+    crewRef.on('value', snap => {
+      const before = crewData;
+      crewData = snap.val() || {};
+      announceMoves(before, crewData);
+      updateCrewPip();
+      if(view === 'crew' || view === 'now') render();
+    }, () => { fbError = 'denied'; if(view === 'crew') render() });
   }catch(e){ fbError = 'failed'; crewRef = null }
+}
+function announceMoves(before, after){
+  if(!alertsOn || !crew || !Object.keys(before).length) return;
+  Object.keys(after).forEach(id => {
+    if(id === crew.id) return;
+    const was = before[id], is = after[id];
+    if(!is || !is.name || !is.stage) return;
+    if(was && was.stage === is.stage) return;
+    if(Date.now() - is.ts > 5*60*1000) return;
+    try{
+      if('Notification' in window && Notification.permission === 'granted'){
+        const set = playingAt(is.stage);
+        new Notification(is.name+(was ? ' moved to ' : ' is at ')+placeName(is.stage),
+          {body: set ? plain(set)+' until '+set.e : 'Tap to see the crew', tag:'move-'+id});
+      }
+    }catch(e){}
+  });
 }
 function checkIn(placeId){
   if(!crew || !fbInit()) return;
@@ -1026,11 +1086,10 @@ function checkIn(placeId){
       .catch(() => toast('Check-in did not save — check the database rules'));
   }catch(e){ toast('Could not reach the crew list') }
 }
-function joinCrew(code, name){
-  code = String(code || '').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
+function joinCrew(name){
   name = String(name || '').trim().slice(0,24);
   if(!name) return toast('Add a name first');
-  if(code.length < 4) return toast('That crew code is too short');
+  const code = inviteCode || DEFAULT_ROOM;
   crew = {code, id: (crew && crew.id) || uid(), name};
   store.set('vv26crew', crew);
   store.set('vv26name', name);
@@ -1047,10 +1106,12 @@ function leaveCrew(){
   render();
 }
 async function shareCrew(){
-  const url = location.origin + location.pathname + '?crew=' + crew.code;
+  const url = location.origin + location.pathname +
+    (crew.code === DEFAULT_ROOM ? '' : '?crew='+crew.code);
   try{
     if(navigator.share){
-      await navigator.share({title:'Join my Voodoo Village crew', text:'Crew code '+crew.code, url});
+      await navigator.share({title:'Voodoo Village — who is where',
+        text:'Open this, add your name and tap the floor you are on.', url});
       return;
     }
     await navigator.clipboard.writeText(url);
@@ -1059,6 +1120,80 @@ async function shareCrew(){
     if(err && err.name === 'AbortError') return;
     toast('Crew code: '+crew.code);
   }
+}
+
+function crewAt(stageId){
+  if(!crew) return [];
+  return Object.keys(crewData).map(id => Object.assign({id}, crewData[id]))
+    .filter(m => m && m.name && m.ts && Date.now()-m.ts < FRESH &&
+                 m.stage === stageId && m.id !== crew.id);
+}
+function nudge(){
+  if(!crew) return '';
+  const me = crewData[crew.id];
+  if(!me || Date.now()-me.ts < 45*60*1000) return '';
+  return '<div class="nudge">Still at <b>'+esc(placeName(me.stage))+'</b>? Last tap '+ago(me.ts)+
+    '<button class="minibtn" data-place="'+esc(me.stage)+'">Yes</button>'+
+    '<button class="minibtn" id="goCrew">Moved</button></div>';
+}
+
+/* ---------------- set alerts ---------------- */
+const LEAD = 10;
+let alertsOn = store.get('vv26alerts', false);
+let alerted = new Set(store.get('vv26alerted', []));
+
+function nextPick(){
+  const d = liveDay();
+  if(!d) return null;
+  const now = nowFor(d).min;
+  if(now === null) return null;
+  return [...picks].map(k => BY_KEY[k]).filter(Boolean)
+    .filter(x => x.day === d && x.sm > now)
+    .sort((a,b) => a.sm-b.sm)[0] || null;
+}
+function fireAlerts(){
+  if(!alertsOn) return;
+  const d = liveDay();
+  if(!d) return;
+  const now = nowFor(d).min;
+  if(now === null) return;
+  [...picks].map(k => BY_KEY[k]).filter(Boolean)
+    .filter(x => x.day === d && !alerted.has(x.key) && x.sm-now <= LEAD && x.sm-now > -2)
+    .forEach(x => {
+      alerted.add(x.key);
+      store.set('vv26alerted', [...alerted]);
+      try{
+        if('Notification' in window && Notification.permission === 'granted'){
+          new Notification(plain(x)+' starts in '+Math.max(0, x.sm-now)+' min',
+            {body:x.stage.name+' · '+x.s+' – '+x.e, tag:x.key});
+        }
+      }catch(e){}
+    });
+}
+function soonBar(){
+  const x = nextPick();
+  if(!x) return '';
+  const d = liveDay();
+  const left = x.sm - nowFor(d).min;
+  if(left > 25) return '';
+  return '<div class="soonbar" data-key="'+x.key+'">★ <b>'+nameHTML(x)+'</b> in '+dur(left)+
+         ' · '+esc(x.stage.name)+'</div>';
+}
+async function toggleAlerts(){
+  if(!alertsOn){
+    if('Notification' in window && Notification.permission === 'default'){
+      try{ await Notification.requestPermission() }catch(e){}
+    }
+    alertsOn = true;
+    const granted = 'Notification' in window && Notification.permission === 'granted';
+    toast(granted ? 'Alerts on — '+LEAD+' min before each pick'
+                  : 'Alerts on in the app — allow notifications for pop-ups');
+  }else{
+    alertsOn = false;
+    toast('Alerts off');
+  }
+  store.set('vv26alerts', alertsOn);
+  render();
 }
 
 function renderCrew(){
@@ -1071,19 +1206,17 @@ function renderCrew(){
   }
   if(!crew){
     return '<div class="joincard">'+
-      '<h3>Find your people</h3>'+
-      '<p>One code for the group. Everyone taps the floor they are standing on, and this list shows who is where. Nothing is tracked — only what you tap is shared.</p>'+
+      '<h3>Who is where</h3>'+
+      '<p>Type your name, then tap the floor you are standing on. Everyone with this link sees the same list. No location access — only what you tap is shared.</p>'+
       '<input class="field" id="crewName" placeholder="Your name" maxlength="24" autocomplete="nickname" value="'+esc(crewName)+'">'+
-      '<button class="bigbtn" id="crewCreate">Create a crew</button>'+
-      '<div class="orline">or join one</div>'+
-      '<input class="field code" id="crewCode" placeholder="Crew code" maxlength="6" autocomplete="off" value="'+esc(joinCode)+'">'+
-      '<button class="bigbtn ghost" id="crewJoin">Join</button>'+
+      '<button class="bigbtn" id="crewCreate">Start checking in</button>'+
       '</div>';
   }
 
   const mine = crewData[crew.id];
-  let h = '<div class="crewbar"><span class="code">'+esc(crew.code)+'</span>'+
-    '<span class="who">You are '+esc(crew.name)+'</span>'+
+  let h = '<div class="crewbar">'+
+    (crew.code !== DEFAULT_ROOM ? '<span class="code">'+esc(crew.code)+'</span>' : '')+
+    '<span class="who">You are <b>'+esc(crew.name)+'</b></span>'+
     '<button class="minibtn" id="crewShare">Share</button>'+
     '<button class="minibtn warn" id="crewLeave">Leave</button></div>';
 
@@ -1103,7 +1236,7 @@ function renderCrew(){
   const stale = list.filter(m => Date.now()-m.ts >= FRESH);
 
   if(!fresh.length){
-    h += '<div class="empty">Nobody has checked in yet.<br>Tap a floor above, then send the crew code round.</div>';
+    h += '<div class="empty">Nobody has checked in yet.<br>Tap a floor above, then send your friends the link.</div>';
   }else{
     const byPlace = {};
     fresh.forEach(m => { (byPlace[m.stage] = byPlace[m.stage] || []).push(m) });
@@ -1128,7 +1261,7 @@ function renderCrew(){
     });
     h += '</section>';
   }
-  h += '<div class="note">Everyone holding the code sees this list. <b>Leave</b> deletes you from it. '+
+  h += '<div class="note">Everyone with this link sees the list. <b>Leave</b> deletes you from it. '+
        'Entries drop to “quiet” after 90 minutes without a tap — the time shown is when someone last tapped, not where they are guaranteed to be.</div>';
   return h;
 }
@@ -1148,6 +1281,8 @@ function render(){
       (live ? 'live now' : t.min < day.sm ? 'in '+dur(day.sm-t.min) : 'finished');
 
   paintScrub(t, live);
+  fireAlerts();
+  document.getElementById('soonWrap').innerHTML = soonBar();
   document.getElementById('pip').textContent = picks.size;
   document.getElementById('pip').hidden = !picks.size;
   document.getElementById('searchRow').hidden = view !== 'stages';
@@ -1290,11 +1425,12 @@ document.getElementById('view').addEventListener('input', e => {
 
 document.getElementById('view').addEventListener('click', e => {
   const place = e.target.closest('[data-place]');
-  if(place){ checkIn(place.dataset.place); return }
-  if(e.target.closest('#crewCreate')) return joinCrew(newCode(), crewName);
-  if(e.target.closest('#crewJoin')) return joinCrew(joinCode, crewName);
+  if(place){ checkIn(place.dataset.place); render(); return }
+  if(e.target.closest('#crewCreate')) return joinCrew(crewName);
   if(e.target.closest('#crewShare')) return shareCrew();
   if(e.target.closest('#crewLeave')) return leaveCrew();
+  if(e.target.closest('#goCrew')) return setView('crew');
+  if(e.target.closest('#alertToggle')) return toggleAlerts();
   const star = e.target.closest('.star');
   if(star){ togglePick(star.dataset.key); render(); return }
   const chip = e.target.closest('.chip');
@@ -1311,10 +1447,15 @@ document.getElementById('sheet').addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => { if(e.key === 'Escape' && openKey) closeSheet() });
 
-const invite = (new URLSearchParams(location.search).get('crew') || '')
-  .toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
-if(invite && !crew){ joinCode = invite; view = 'crew' }
+inviteCode = (new URLSearchParams(location.search).get('crew') || '')
+  .toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,12);
+if(inviteCode && !crew) view = 'crew';
 if(crew) crewAttach();
+
+document.getElementById('soonWrap').addEventListener('click', e => {
+  const el = e.target.closest('[data-key]');
+  if(el) openSheet(el.dataset.key);
+});
 
 document.querySelectorAll('.tabbar button').forEach(o => o.setAttribute('aria-selected', String(o.dataset.view === view)));
 document.querySelectorAll('.dayseg button').forEach(o => o.setAttribute('aria-selected', String(o.dataset.day === day.id)));
