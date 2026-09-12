@@ -4,8 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#12150F" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFFFFF" id="tc">
 <meta name="apple-mobile-web-app-title" content="VV Saturday">
 <meta name="description" content="Voodoo Village 2026 — Saturday 12 September timetable for all ten stages, with a live now-playing view and a personal plan.">
 <title>Voodoo Village · Saturday 12 Sep</title>
@@ -71,19 +70,39 @@
   .subline b{color:var(--ink);font-weight:600}
 
   /* ---------- sticky status ---------- */
-  .statusbar{position:sticky;top:0;z-index:30;background:var(--bg);margin:0 -16px;padding:9px 16px 0;
+  .statusbar{position:sticky;top:0;z-index:30;background:var(--bg);margin:0 -16px;padding:8px 16px 0;
     border-bottom:1px solid var(--line)}
   .status{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-2);
-    padding-bottom:9px}
+    min-height:34px}
   .status .mono{font-family:var(--mono)}
   .pulse{width:8px;height:8px;border-radius:50%;background:var(--live);flex:none;
     animation:pulse 2.2s ease-in-out infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.28}}
   @media (prefers-reduced-motion:reduce){.pulse{animation:none}}
-  .rail{position:relative;height:3px;background:var(--panel-2);margin:0 -16px}
-  .rail-fill{position:absolute;left:0;top:0;bottom:0;background:var(--green)}
-  .rail-head{position:absolute;top:50%;width:9px;height:9px;border-radius:50%;background:var(--live);
-    transform:translate(-50%,-50%);border:2px solid var(--bg)}
+  .icon-btn{appearance:none;border:0;background:transparent;color:var(--ink-2);width:34px;height:34px;
+    border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+  .icon-btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;
+    stroke-linecap:round;stroke-linejoin:round}
+  .now-pill{appearance:none;border:0;background:var(--live);color:#fff;border-radius:8px;
+    padding:7px 11px;font-size:12px;font-weight:700;letter-spacing:.04em;cursor:pointer;
+    margin-left:auto;flex:none}
+  .now-pill + .icon-btn{margin-left:0}
+  .status .icon-btn:only-of-type{margin-left:auto}
+
+  /* ---------- day scrubber ---------- */
+  .scrub{position:relative;height:30px;display:flex;align-items:center;touch-action:none;cursor:pointer}
+  .scrub-track{position:relative;width:100%;height:6px;border-radius:3px;background:var(--panel-2)}
+  .scrub-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--green)}
+  .tick{position:absolute;top:-3px;width:1px;height:12px;background:var(--line)}
+  .knob{position:absolute;top:50%;width:19px;height:19px;border-radius:50%;background:var(--live);
+    border:3px solid var(--bg);transform:translate(-50%,-50%);box-shadow:0 1px 4px rgba(0,0,0,.28)}
+  .knob.pick{background:var(--gold);width:17px;height:17px}
+  .bubble{position:absolute;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);
+    font-family:var(--mono);font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;
+    white-space:nowrap;pointer-events:none;z-index:4}
+  .scrub-labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;
+    color:var(--ink-3);padding-bottom:7px}
+  .scrub:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:6px}
 
   /* ---------- bottom tabs ---------- */
   .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--bg);
@@ -178,6 +197,11 @@
   .nowflag{position:absolute;top:1px;transform:translateX(-50%);background:var(--live);color:#fff;
     font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px;
     white-space:nowrap;z-index:3}
+  .pickline{position:absolute;top:0;bottom:0;width:2px;z-index:1;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,var(--gold) 0 5px,transparent 5px 9px)}
+  .pickflag{position:absolute;top:1px;transform:translateX(-50%);background:var(--gold);color:var(--bg);
+    font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px;
+    white-space:nowrap;z-index:2}
 
   /* ---------- stages ---------- */
   .chips{display:flex;gap:7px;overflow-x:auto;padding:12px 16px;margin:0 -16px;scrollbar-width:none}
@@ -265,8 +289,18 @@
   </header>
 
   <div class="statusbar">
-    <div class="status"><i class="pulse" id="pulse"></i><span id="clock">Loading…</span></div>
-    <div class="rail"><div class="rail-fill" id="railFill"></div><div class="rail-head" id="railHead"></div></div>
+    <div class="status">
+      <i class="pulse" id="pulse"></i><span id="clock">Loading…</span>
+      <button class="now-pill" id="nowPill" hidden>Now</button>
+      <button class="icon-btn" id="themeBtn" aria-label="Switch theme"></button>
+    </div>
+    <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Jump to a time of day"
+         aria-valuemin="900" aria-valuemax="1500" aria-valuenow="900" aria-valuetext="15:00">
+      <div class="scrub-track" id="scrubTrack">
+        <div class="scrub-fill" id="scrubFill"></div>
+      </div>
+    </div>
+    <div class="scrub-labels"><span>15</span><span>17</span><span>19</span><span>21</span><span>23</span><span>01</span></div>
   </div>
 
   <div id="searchRow" hidden>
@@ -439,6 +473,28 @@ let picks = new Set(store.get('vv26sat', []));
 let view = store.get('vv26tab', 'now');
 if(!['now','grid','stages','mine'].includes(view)) view = 'now';
 let stageFilter = 'all', query = '', closed = new Set(), gridScroll = null, openKey = null;
+let scrubTime = null, dragTime = null, gridTarget = null;
+
+/* ---------------- theme ---------------- */
+const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>';
+const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2z"/></svg>';
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+let theme = store.get('vv26theme', null);
+const effTheme = () => theme || (mq.matches ? 'dark' : 'light');
+function applyTheme(){
+  const e = effTheme();
+  document.documentElement.setAttribute('data-theme', e);
+  const btn = document.getElementById('themeBtn');
+  btn.innerHTML = e === 'dark' ? SUN : MOON;
+  btn.setAttribute('aria-label', e === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  document.getElementById('tc').setAttribute('content', e === 'dark' ? '#12150F' : '#FFFFFF');
+}
+mq.addEventListener('change', () => { if(!theme) applyTheme() });
+document.getElementById('themeBtn').addEventListener('click', () => {
+  theme = effTheme() === 'dark' ? 'light' : 'dark';
+  store.set('vv26theme', theme);
+  applyTheme();
+});
 
 const tagHTML = x => x.tag ? '<span class="badge'+(x.tag==='Live'?'':' gold')+'">'+esc(x.tag)+'</span>' : '';
 const nameHTML = x => esc(x.a) + (x.b ? ' <span class="b2b">b2b</span> '+esc(x.b) : '');
@@ -505,6 +561,7 @@ function renderGrid(t){
     const cls = m === DAY_START ? ' first' : m === DAY_END ? ' last' : '';
     h += '<span class="axis-tick'+cls+'" style="left:'+((m-DAY_START)*PX_MIN)+'px">'+fmt(m)+'</span>';
   }
+  if(scrubTime !== null) h += '<span class="pickflag" style="left:'+((scrubTime-DAY_START)*PX_MIN)+'px">'+fmt(scrubTime)+'</span>';
   if(live) h += '<span class="nowflag" style="left:'+nowX+'px">'+fmt(now)+'</span>';
   h += '</div></div>';
 
@@ -521,6 +578,7 @@ function renderGrid(t){
              '" data-key="'+x.key+'" style="left:'+left+'px;width:'+(w-3)+'px">'+
              '<b>'+esc(plain(x))+'</b>'+(w > 96 ? '<i>'+x.s+'–'+x.e+'</i>' : '')+'</button>';
       });
+      if(scrubTime !== null) h += '<div class="pickline" style="left:'+((scrubTime-DAY_START)*PX_MIN)+'px"></div>';
       if(live) h += '<div class="nowline" style="left:'+nowX+'px"></div>';
       h += '</div></div>';
     });
@@ -626,11 +684,8 @@ function render(){
     : '<span class="mono">'+fmt(t.clock)+'</span> Brussels · '+
       (live ? 'live now' : t.min < DAY_START ? dur(DAY_START-t.min)+' to gates' : 'festival over');
 
-  const pos = t.min === null ? 0 : Math.min(100, Math.max(0, (t.min-DAY_START)/(DAY_END-DAY_START)*100));
-  document.getElementById('railFill').style.width = pos+'%';
-  const head = document.getElementById('railHead');
-  head.style.left = pos+'%';
-  head.hidden = !live;
+  paintScrub(t, live);
+  document.getElementById('nowPill').hidden = !live;
 
   const pip = document.getElementById('pip');
   pip.textContent = picks.size;
@@ -646,10 +701,85 @@ function render(){
 
   if(view === 'grid'){
     const w = document.getElementById('gridWrap');
-    if(w) w.scrollLeft = gridScroll !== null ? gridScroll
-      : (live ? Math.max(0, (t.min-DAY_START)*PX_MIN - 70) : 0);
+    if(w){
+      if(gridTarget !== null){
+        w.scrollLeft = Math.max(0, (gridTarget-DAY_START)*PX_MIN - 60);
+        gridTarget = null;
+      }else{
+        w.scrollLeft = gridScroll !== null ? gridScroll
+          : (live ? Math.max(0, (t.min-DAY_START)*PX_MIN - 70) : 0);
+      }
+    }
   }
 }
+
+/* ---------------- day scrubber ---------------- */
+const pctOf = m => Math.min(100, Math.max(0, (m-DAY_START)/(DAY_END-DAY_START)*100));
+function paintScrub(t, live){
+  let inner = '<div class="scrub-fill" style="width:'+(t.min === null ? 0 : pctOf(t.min))+'%"></div>';
+  for(let m = DAY_START+120; m < DAY_END; m += 120) inner += '<div class="tick" style="left:'+pctOf(m)+'%"></div>';
+  if(scrubTime !== null) inner += '<div class="knob pick" style="left:'+pctOf(scrubTime)+'%"></div>';
+  if(live) inner += '<div class="knob" style="left:'+pctOf(t.min)+'%"></div>';
+  if(dragTime !== null) inner += '<div class="bubble" style="left:'+pctOf(dragTime)+'%">'+fmt(dragTime)+'</div>';
+  document.getElementById('scrubTrack').innerHTML = inner;
+  const v = scrubTime !== null ? scrubTime : (t.min === null ? DAY_START : t.min);
+  const el = document.getElementById('scrub');
+  el.setAttribute('aria-valuenow', Math.round(v));
+  el.setAttribute('aria-valuetext', fmt(v));
+}
+function jumpTo(min){
+  scrubTime = Math.min(DAY_END, Math.max(DAY_START, min));
+  gridTarget = scrubTime;
+  gridScroll = null;
+  if(view !== 'grid') setView('grid');
+  else { render(); window.scrollTo({top:0, behavior:'smooth'}) }
+}
+const scrubEl = document.getElementById('scrub');
+const timeAt = e => {
+  const r = document.getElementById('scrubTrack').getBoundingClientRect();
+  const p = Math.min(1, Math.max(0, (e.clientX - r.left)/r.width));
+  return Math.round((DAY_START + p*(DAY_END-DAY_START))/5)*5;
+};
+scrubEl.addEventListener('pointerdown', e => {
+  scrubEl.setPointerCapture(e.pointerId);
+  dragTime = timeAt(e);
+  paintScrub(festNow(), isLive());
+});
+scrubEl.addEventListener('pointermove', e => {
+  if(dragTime === null) return;
+  dragTime = timeAt(e);
+  paintScrub(festNow(), isLive());
+});
+scrubEl.addEventListener('pointerup', () => {
+  if(dragTime === null) return;
+  const v = dragTime; dragTime = null;
+  jumpTo(v);
+});
+scrubEl.addEventListener('pointercancel', () => { dragTime = null; render() });
+scrubEl.addEventListener('keydown', e => {
+  const t = festNow();
+  const base = scrubTime !== null ? scrubTime : (t.min === null ? DAY_START : t.min);
+  const k = e.key;
+  if(k === 'Enter' || k === ' '){ e.preventDefault(); return jumpTo(base) }
+  let v = null;
+  if(k === 'ArrowRight' || k === 'ArrowUp') v = base + 15;
+  else if(k === 'ArrowLeft' || k === 'ArrowDown') v = base - 15;
+  else if(k === 'Home') v = DAY_START;
+  else if(k === 'End') v = DAY_END;
+  if(v === null) return;
+  e.preventDefault();
+  jumpTo(v);
+});
+function isLive(){ const t = festNow(); return t.min !== null && t.min >= DAY_START && t.min < DAY_END }
+document.getElementById('nowPill').addEventListener('click', () => {
+  const t = festNow();
+  if(t.min === null) return;
+  scrubTime = null;
+  gridTarget = t.min;
+  gridScroll = null;
+  if(view !== 'grid') setView('grid');
+  else { render(); window.scrollTo({top:0, behavior:'smooth'}) }
+});
 
 function setView(v){
   view = v;
@@ -694,6 +824,7 @@ document.getElementById('sheet').addEventListener('click', e => {
 document.addEventListener('keydown', e => { if(e.key === 'Escape' && openKey) closeSheet() });
 
 document.querySelectorAll('.tabbar button').forEach(o => o.setAttribute('aria-selected', String(o.dataset.view === view)));
+applyTheme();
 render();
 setInterval(render, 30000);
 document.addEventListener('visibilitychange', () => { if(!document.hidden) render() });
