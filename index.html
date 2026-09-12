@@ -1,5 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
-<title>Voodoo Village Saturday</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12150F" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-title" content="VV Saturday">
+<meta name="description" content="Voodoo Village 2026 — Saturday 12 September timetable for all ten stages, with a live now-playing view and a personal plan.">
+<title>Voodoo Village · Saturday 12 Sep</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
@@ -21,6 +30,7 @@
     --sans:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
     --mono:"IBM Plex Mono","SF Mono",Menlo,monospace;
     --disp:"Fraunces",Georgia,"Times New Roman",serif;
+    --tabh:62px;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -41,78 +51,90 @@
     --gold:#D9BC6A; --gold-soft:#2A2416;
   }
 
-  *{box-sizing:border-box}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%;overflow-x:clip}
   body{
     margin:0;background:var(--bg);color:var(--ink);
     font-family:var(--sans);font-size:16px;line-height:1.5;
-    -webkit-font-smoothing:antialiased;
+    -webkit-font-smoothing:antialiased;overflow-x:clip;
   }
-  .wrap{max-width:480px;margin:0 auto;padding:0 16px 90px}
+  button{font-family:inherit;touch-action:manipulation}
   [hidden]{display:none!important}
-  button{font-family:inherit}
+  .wrap{max-width:480px;margin:0 auto;padding:0 16px calc(var(--tabh) + 40px + env(safe-area-inset-bottom))}
 
   /* ---------- hero ---------- */
-  .hero{padding:22px 0 4px}
+  .hero{padding:20px 0 14px}
   .kicker{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
-  .hero h1{font-family:var(--disp);font-weight:700;font-size:38px;line-height:1;margin:10px 0 0;letter-spacing:-.015em}
-  .subline{margin:9px 0 0;font-size:14px;color:var(--ink-2)}
+  .hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,9vw,38px);line-height:1;
+    margin:9px 0 0;letter-spacing:-.015em}
+  .subline{margin:8px 0 0;font-size:13.5px;color:var(--ink-2)}
   .subline b{color:var(--ink);font-weight:600}
 
-  .rail{margin-top:16px}
-  .rail-track{position:relative;height:6px;border-radius:3px;background:var(--panel-2)}
-  .rail-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--green)}
-  .rail-head{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--live);
-    transform:translate(-50%,-50%);border:2px solid var(--bg)}
-  .rail-labels{display:flex;justify-content:space-between;margin-top:6px;
-    font-family:var(--mono);font-size:11px;color:var(--ink-3)}
-
-  /* ---------- sticky bar ---------- */
-  .bar{position:sticky;top:0;z-index:30;background:var(--bg);padding:12px 0 10px;
-    border-bottom:1px solid var(--line);margin-bottom:8px}
-  .seg{display:flex;gap:3px;background:var(--panel);border-radius:11px;padding:4px}
-  .seg button{flex:1;appearance:none;border:0;background:transparent;color:var(--ink-2);
-    font-size:13px;font-weight:600;padding:10px 2px;border-radius:8px;cursor:pointer;white-space:nowrap}
-  .seg button[aria-selected="true"]{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(20,24,19,.16)}
-  .seg .cnt{font-family:var(--mono);font-size:11px;color:var(--gold)}
-  .seg button:focus-visible,.chip:focus-visible,.star:focus-visible,.blk:focus-visible,
-  .jump:focus-visible,.sheet-btn:focus-visible,.stage-head:focus-visible,#q:focus-visible{
-    outline:2px solid var(--live);outline-offset:2px}
-  .status{margin-top:9px;display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
-  .pulse{width:8px;height:8px;border-radius:50%;background:var(--live);flex:none;animation:pulse 2.2s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  /* ---------- sticky status ---------- */
+  .statusbar{position:sticky;top:0;z-index:30;background:var(--bg);margin:0 -16px;padding:9px 16px 0;
+    border-bottom:1px solid var(--line)}
+  .status{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-2);
+    padding-bottom:9px}
+  .status .mono{font-family:var(--mono)}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--live);flex:none;
+    animation:pulse 2.2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.28}}
   @media (prefers-reduced-motion:reduce){.pulse{animation:none}}
+  .rail{position:relative;height:3px;background:var(--panel-2);margin:0 -16px}
+  .rail-fill{position:absolute;left:0;top:0;bottom:0;background:var(--green)}
+  .rail-head{position:absolute;top:50%;width:9px;height:9px;border-radius:50%;background:var(--live);
+    transform:translate(-50%,-50%);border:2px solid var(--bg)}
+
+  /* ---------- bottom tabs ---------- */
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--bg);
+    border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+  .tabbar-in{max-width:480px;margin:0 auto;display:flex}
+  .tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    height:var(--tabh);border:0;background:transparent;color:var(--ink-3);font-size:11px;font-weight:600;
+    cursor:pointer;position:relative}
+  .tabbar button[aria-selected="true"]{color:var(--live)}
+  .tabbar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;
+    stroke-linecap:round;stroke-linejoin:round}
+  .tabbar .pip{position:absolute;top:6px;left:calc(50% + 9px);min-width:17px;height:17px;border-radius:9px;
+    background:var(--gold);color:var(--bg);font-family:var(--mono);font-size:10px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;padding:0 4px}
+
+  :focus-visible{outline:2px solid var(--live);outline-offset:2px}
 
   /* ---------- search ---------- */
-  #searchRow{margin:2px 0 10px}
-  #q{width:100%;appearance:none;background:var(--panel);border:1px solid transparent;border-radius:11px;
-    padding:12px 14px;font-family:var(--sans);font-size:15px;color:var(--ink)}
+  #searchRow{margin:12px 0 4px}
+  #q{width:100%;appearance:none;background:var(--panel);border:1px solid transparent;border-radius:12px;
+    padding:13px 14px;font-family:var(--sans);font-size:16px;color:var(--ink)}
   #q::placeholder{color:var(--ink-3)}
 
   /* ---------- headings ---------- */
-  .group{display:flex;align-items:baseline;gap:10px;margin:24px 0 12px}
+  .group{display:flex;align-items:baseline;gap:10px;margin:22px 0 11px}
   .group h2{margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
     color:var(--ink-3);white-space:nowrap}
   .group .hr{flex:1;height:1px;background:var(--line)}
 
   /* ---------- NOW cards ---------- */
-  .card{border:1px solid var(--line);border-radius:12px;padding:14px 15px;margin-bottom:10px;background:var(--bg)}
+  .card{border:1px solid var(--line);border-radius:13px;padding:13px 8px 14px 15px;margin-bottom:10px;
+    background:var(--bg)}
   .card.live{border-color:var(--live);border-left-width:4px;background:var(--live-soft)}
   .card.idle{background:var(--panel)}
-  .card-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+  .card-top{display:flex;align-items:center;gap:7px;min-height:32px}
   .sigil{width:17px;height:17px;flex:none;color:var(--green)}
   .card.live .sigil{color:var(--live)}
   .stage-name{font-family:var(--disp);font-size:15px;font-weight:600}
   .host{font-size:12px;color:var(--ink-3)}
-  .flag{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;
-    letter-spacing:.1em;text-transform:uppercase;color:var(--live)}
-  .artist{font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-.01em}
-  .artist.quiet{font-size:17px;font-weight:500;color:var(--ink-3)}
+  .onair{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:#fff;background:var(--live);border-radius:5px;padding:3px 7px}
+  .card .star{margin-left:auto}
+  .body{padding-right:7px}
+  .artist{font-size:21px;font-weight:700;line-height:1.15;letter-spacing:-.01em;margin-top:4px}
+  .artist.quiet{font-size:16px;font-weight:500;color:var(--ink-3)}
   .b2b{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--green);padding:0 2px}
   .prog{margin-top:11px;display:flex;align-items:center;gap:10px}
   .prog-track{flex:1;height:5px;border-radius:3px;background:var(--panel-2);overflow:hidden}
   .prog-fill{height:100%;background:var(--live)}
   .prog-txt{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink-2);white-space:nowrap}
-  .meta-line{margin-top:8px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2)}
+  .meta-line{margin-top:7px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2)}
   .meta-line b{color:var(--live);font-weight:600}
   .next{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);
     display:flex;gap:9px;align-items:baseline;font-size:14px}
@@ -121,131 +143,131 @@
   .next .n{font-weight:600}
 
   /* ---------- GRID ---------- */
-  .grid-tools{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-  .grid-hint{font-size:12.5px;color:var(--ink-3)}
-  .jump{appearance:none;border:0;background:var(--live);color:#fff;border-radius:9px;
-    padding:9px 13px;font-size:13px;font-weight:600;cursor:pointer;margin-left:auto;white-space:nowrap}
-  .grid-wrap{overflow-x:auto;overflow-y:hidden;margin:0 -16px;padding:0 0 10px;
-    -webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .grid-tools{display:flex;align-items:center;gap:8px;margin:14px 0 10px;min-height:40px}
+  .grid-hint{font-size:12.5px;color:var(--ink-3);line-height:1.3}
+  .jump{appearance:none;border:0;background:var(--live);color:#fff;border-radius:10px;
+    padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-left:auto;white-space:nowrap}
+  .grid-wrap{overflow-x:auto;overflow-y:hidden;margin:0 -16px;padding-bottom:8px;
+    -webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
   .grow{display:flex;align-items:stretch}
-  .glabel{position:sticky;left:0;z-index:2;flex:none;width:112px;background:var(--bg);
+  .glabel{position:sticky;left:0;z-index:2;flex:none;width:110px;background:var(--bg);
     border-right:1px solid var(--line);padding:0 6px 0 14px;display:flex;align-items:center;gap:6px}
   .glabel .sigil{width:12px;height:12px}
   .glabel span{font-size:10.5px;font-weight:700;letter-spacing:0;line-height:1.1}
   .gtrack{position:relative;flex:none;height:100%}
-  .grow.axis{height:26px}
-  .grow.axis .glabel{border-right:1px solid var(--line)}
-  .axis-tick{position:absolute;top:6px;font-family:var(--mono);font-size:11px;color:var(--ink-3);
+  .grow.axis{height:24px;position:relative}
+  .axis-tick{position:absolute;top:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3);
     transform:translateX(-50%);white-space:nowrap}
   .axis-tick.first{transform:none}
   .axis-tick.last{transform:translateX(-100%)}
-  .grow.lane{height:46px;border-top:1px solid var(--line)}
+  .grow.lane{height:48px;border-top:1px solid var(--line)}
   .grow.lane .gtrack{background-image:repeating-linear-gradient(to right,var(--line) 0 1px,transparent 1px var(--hourpx))}
   .gcap{position:sticky;left:0;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--ink-3);padding:14px 16px 5px;width:min(100%,300px)}
-  .blk{position:absolute;top:5px;bottom:5px;border-radius:7px;border:1px solid var(--green);
-    background:var(--green-soft);color:var(--ink);padding:4px 6px;overflow:hidden;text-align:left;
+    color:var(--ink-3);padding:13px 16px 5px;width:min(100%,300px)}
+  .blk{position:absolute;top:5px;bottom:5px;border-radius:8px;border:1px solid var(--green);
+    background:var(--green-soft);color:var(--ink);padding:4px 7px;overflow:hidden;text-align:left;
     cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:1px}
-  .blk b{font-size:11.5px;font-weight:600;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    display:block;width:100%}
-  .blk i{font-family:var(--mono);font-style:normal;font-size:9.5px;color:var(--ink-3);white-space:nowrap}
+  .blk b{font-size:12px;font-weight:600;line-height:1.15;white-space:nowrap;overflow:hidden;
+    text-overflow:ellipsis;display:block;width:100%}
+  .blk i{font-family:var(--mono);font-style:normal;font-size:10px;color:var(--ink-3);white-space:nowrap}
   .blk.on{background:var(--live);border-color:var(--live);color:#fff}
   .blk.on i{color:rgba(255,255,255,.85)}
-  .blk.done{opacity:.42}
+  .blk.done{opacity:.4}
   .blk.star{box-shadow:inset 0 0 0 2px var(--gold)}
   .nowline{position:absolute;top:0;bottom:0;width:2px;background:var(--live);z-index:1;pointer-events:none}
-  .nowflag{position:absolute;top:2px;transform:translateX(-50%);background:var(--live);color:#fff;
-    font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px;white-space:nowrap;z-index:3}
+  .nowflag{position:absolute;top:1px;transform:translateX(-50%);background:var(--live);color:#fff;
+    font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px;
+    white-space:nowrap;z-index:3}
 
-  /* ---------- stage schedule ---------- */
-  .chips{display:flex;gap:7px;overflow-x:auto;padding:2px 16px 12px;margin:0 -16px;scrollbar-width:none}
+  /* ---------- stages ---------- */
+  .chips{display:flex;gap:7px;overflow-x:auto;padding:12px 16px;margin:0 -16px;scrollbar-width:none}
   .chips::-webkit-scrollbar{display:none}
-  .chip{flex:none;appearance:none;background:var(--panel);border:1px solid transparent;color:var(--ink-2);
-    border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .chip{flex:none;appearance:none;background:var(--panel);border:0;color:var(--ink-2);
+    border-radius:999px;padding:10px 15px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
   .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
-  .stage-block{margin-bottom:22px}
+  .stage-block{margin-bottom:20px}
   .stage-head{width:100%;appearance:none;background:transparent;border:0;border-bottom:2px solid var(--ink);
-    display:flex;align-items:center;gap:9px;padding:0 0 9px;margin-bottom:2px;cursor:pointer;
+    display:flex;align-items:center;gap:9px;padding:6px 0 9px;margin-bottom:2px;cursor:pointer;
     color:var(--ink);text-align:left}
   .stage-head .sigil{width:20px;height:20px}
-  .stage-head h3{margin:0;font-family:var(--disp);font-size:20px;font-weight:700;letter-spacing:-.01em}
-  .stage-head .host{margin-left:auto}
-  .chev{width:14px;height:14px;flex:none;color:var(--ink-3);transition:transform .18s}
+  .stage-head h3{margin:0;font-family:var(--disp);font-size:19px;font-weight:700;letter-spacing:-.01em}
+  .stage-head .host{margin-left:auto;max-width:42%;text-align:right;line-height:1.2}
+  .chev{width:15px;height:15px;flex:none;color:var(--ink-3);transition:transform .18s}
   .stage-block.closed .chev{transform:rotate(-90deg)}
   @media (prefers-reduced-motion:reduce){.chev{transition:none}}
   .stage-block.closed .sets{display:none}
-  .set{display:grid;grid-template-columns:58px 1fr 34px;gap:12px;align-items:start;
-    padding:13px 0 13px 10px;border-bottom:1px solid var(--line);border-left:4px solid transparent;margin-left:-14px}
+  .set{display:grid;grid-template-columns:56px 1fr 44px;gap:10px;align-items:center;
+    padding:10px 0 10px 10px;border-bottom:1px solid var(--line);border-left:4px solid transparent;
+    margin-left:-14px;min-height:60px}
   .set.live{border-left-color:var(--live);background:var(--live-soft)}
   .set.past .set-name,.set.past .set-time{color:var(--ink-3)}
-  .set-time{font-family:var(--mono);font-size:13px;font-weight:600;padding-top:2px}
+  .set-time{font-family:var(--mono);font-size:13px;font-weight:600}
   .set-time span{display:block;color:var(--ink-3);font-weight:500}
   .set.live .set-time{color:var(--live)}
-  .set-name{font-size:17px;font-weight:600;line-height:1.25}
+  .set-name{font-size:16.5px;font-weight:600;line-height:1.25}
   .set-sub{font-size:13px;color:var(--ink-2);margin-top:2px}
-  .set-where{font-size:12px;color:var(--green);font-weight:600;margin-top:2px}
-  .badge{display:inline-block;margin-left:7px;font-size:10px;font-weight:700;letter-spacing:.09em;
+  .set-where{font-size:12.5px;color:var(--green);font-weight:600;margin-top:2px}
+  .badge{display:inline-block;margin-left:6px;font-size:10px;font-weight:700;letter-spacing:.09em;
     text-transform:uppercase;background:var(--green-soft);color:var(--green);border-radius:4px;
     padding:3px 6px;vertical-align:2px;white-space:nowrap}
   .badge.gold{background:var(--gold-soft);color:var(--gold)}
   .badge.now{background:var(--live);color:#fff}
   .star{appearance:none;background:transparent;border:0;cursor:pointer;color:var(--ink-3);
-    width:34px;height:34px;font-size:19px;line-height:1;padding:0}
+    width:44px;height:44px;font-size:20px;line-height:1;padding:0;display:flex;
+    align-items:center;justify-content:center;flex:none}
   .star[aria-pressed="true"]{color:var(--gold)}
 
   /* ---------- my night ---------- */
-  .plan-item{display:grid;grid-template-columns:58px 1fr 34px;gap:12px;align-items:start;
-    padding:14px 0 14px 10px;border-left:4px solid var(--green);border-bottom:1px solid var(--line);margin-left:-14px}
+  .plan-item{display:grid;grid-template-columns:56px 1fr 44px;gap:10px;align-items:center;
+    padding:12px 0 12px 10px;border-left:4px solid var(--green);border-bottom:1px solid var(--line);
+    margin-left:-14px}
   .plan-item.live{border-left-color:var(--live);background:var(--live-soft)}
   .plan-item.past{border-left-color:var(--line)}
   .plan-item.past .set-name,.plan-item.past .set-time{color:var(--ink-3)}
-  .clash{display:flex;gap:8px;align-items:flex-start;margin:6px 0 0;padding:9px 11px;border-radius:9px;
-    background:var(--live-soft);color:var(--live);font-size:12.5px;font-weight:600;line-height:1.35}
-  .gap{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);padding:8px 0 8px 10px;margin-left:-14px}
-  .empty{text-align:center;padding:38px 18px;color:var(--ink-3);font-size:16px;line-height:1.5}
-  .note{margin:14px 0 0;padding:13px 14px;border-radius:11px;background:var(--panel);
-    font-size:14px;color:var(--ink-2);line-height:1.5}
+  .clash{display:block;margin:6px 0 0;padding:8px 10px;border-radius:9px;background:var(--live-soft);
+    color:var(--live);font-size:12.5px;font-weight:600;line-height:1.35}
+  .gap{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);padding:7px 0 7px 10px;margin-left:-14px}
+  .empty{text-align:center;padding:36px 14px;color:var(--ink-3);font-size:15.5px;line-height:1.55}
+  .note{margin:12px 0 0;padding:13px 14px;border-radius:12px;background:var(--panel);
+    font-size:13.5px;color:var(--ink-2);line-height:1.5}
   .note b{color:var(--ink)}
 
   /* ---------- sheet ---------- */
-  .backdrop{position:fixed;inset:0;background:rgba(10,14,9,.5);z-index:50;display:flex;align-items:flex-end;
-    justify-content:center}
-  .sheet{width:100%;max-width:480px;background:var(--bg);border-radius:16px 16px 0 0;padding:20px 18px 26px;
-    border-top:3px solid var(--live)}
+  .backdrop{position:fixed;inset:0;background:rgba(10,14,9,.55);z-index:50;display:flex;
+    align-items:flex-end;justify-content:center}
+  .sheet{width:100%;max-width:480px;background:var(--bg);border-radius:18px 18px 0 0;
+    padding:10px 18px calc(24px + env(safe-area-inset-bottom));border-top:3px solid var(--live);
+    animation:rise .18s ease-out}
+  @keyframes rise{from{transform:translateY(14px)}to{transform:none}}
+  @media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+  .grab{width:38px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 14px}
   .sheet .where{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
-  .sheet h4{margin:8px 0 0;font-size:25px;font-weight:700;line-height:1.15;letter-spacing:-.01em}
+  .sheet h4{margin:8px 0 0;font-size:24px;font-weight:700;line-height:1.15;letter-spacing:-.01em}
   .sheet .when{margin-top:8px;font-family:var(--mono);font-size:14px;color:var(--ink-2)}
   .sheet-actions{display:flex;gap:9px;margin-top:18px}
   .sheet-btn{flex:1;appearance:none;border:1px solid var(--line);background:var(--bg);color:var(--ink);
-    border-radius:11px;padding:14px;font-size:15px;font-weight:600;cursor:pointer}
+    border-radius:12px;padding:15px;font-size:15px;font-weight:600;cursor:pointer}
   .sheet-btn.primary{background:var(--gold);border-color:var(--gold);color:#fff}
   @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sheet-btn.primary{color:#12150F}}
   :root[data-theme="dark"] .sheet-btn.primary{color:#12150F}
 
-  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);
-    font-size:13px;color:var(--ink-3);line-height:1.6}
+  footer{margin-top:26px;padding-top:15px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--ink-3);line-height:1.6}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="hero">
     <div class="kicker">Voodoo Village 2026 · Grimbergen</div>
     <h1>Saturday 12 September</h1>
     <p class="subline"><b>10 stages</b> · <b>57 sets</b> · 15:00 → 01:00 · all times Brussels</p>
-    <div class="rail">
-      <div class="rail-track"><div class="rail-fill" id="railFill"></div><div class="rail-head" id="railHead"></div></div>
-      <div class="rail-labels"><span>15:00</span><span>18:00</span><span>21:00</span><span>01:00</span></div>
-    </div>
   </header>
 
-  <nav class="bar">
-    <div class="seg" role="tablist" aria-label="View">
-      <button role="tab" aria-selected="true" data-view="now">Now</button>
-      <button role="tab" aria-selected="false" data-view="grid">Grid</button>
-      <button role="tab" aria-selected="false" data-view="stages">Stages</button>
-      <button role="tab" aria-selected="false" data-view="mine">Mine <span class="cnt" id="pickCount">0</span></button>
-    </div>
+  <div class="statusbar">
     <div class="status"><i class="pulse" id="pulse"></i><span id="clock">Loading…</span></div>
-  </nav>
+    <div class="rail"><div class="rail-fill" id="railFill"></div><div class="rail-head" id="railHead"></div></div>
+  </div>
 
   <div id="searchRow" hidden>
     <input id="q" type="search" placeholder="Search artist or stage" autocomplete="off">
@@ -255,9 +277,24 @@
 
   <footer>
     From the official Saturday timetable. Set times can shift on the day — trust the stage, not the minute.<br>
-    Tap ★ to build your night; picks are saved on this phone only.
+    Tap ★ to build your night; picks are saved in this browser only.<br>
+    On a phone: Share → Add to Home Screen, and it opens like an app.
   </footer>
 </div>
+
+<nav class="tabbar" aria-label="Views">
+  <div class="tabbar-in" role="tablist">
+    <button role="tab" aria-selected="true" data-view="now">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2v5l3.4 2"/></svg>Now</button>
+    <button role="tab" aria-selected="false" data-view="grid">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="11" height="4.4" rx="1.6"/><rect x="8" y="9.8" width="13" height="4.4" rx="1.6"/><rect x="3" y="14.6" width="9" height="4.4" rx="1.6"/></svg>Grid</button>
+    <button role="tab" aria-selected="false" data-view="stages">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Stages</button>
+    <button role="tab" aria-selected="false" data-view="mine">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.8 2.5 5.4 5.8.8-4.2 4.1 1 5.8-5.1-2.7-5.1 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>Mine
+      <span class="pip" id="pip" hidden>0</span></button>
+  </div>
+</nav>
 
 <div class="backdrop" id="sheet" hidden></div>
 
@@ -368,7 +405,7 @@ const STAGES = [
 ];
 
 const DAY_START = 15*60, DAY_END = 25*60;
-const PX_MIN = 2.1, HOUR_PX = PX_MIN*60, TRACK_W = (DAY_END-DAY_START)*PX_MIN;
+const PX_MIN = 2.1, HOUR_PX = PX_MIN*60, TRACK_W = (DAY_END-DAY_START)*PX_MIN, LABEL_W = 110;
 const toMin = t => {const [h,m] = t.split(':').map(Number); return (h<6?h+24:h)*60+m};
 const BY_KEY = {};
 STAGES.forEach(st => st.sets.forEach(x => {
@@ -394,25 +431,28 @@ function festNow(){
   return {min:null, clock:mins};
 }
 
-let picks = new Set();
-try{ picks = new Set(JSON.parse(localStorage.getItem('vv26sat')||'[]')) }catch(e){}
-const savePicks = () => { try{ localStorage.setItem('vv26sat',JSON.stringify([...picks])) }catch(e){} };
-
-let view = 'now', stageFilter = 'all', query = '', closed = new Set(), gridScroll = null, openKey = null;
+const store = {
+  get(k, fb){ try{ const v = localStorage.getItem(k); return v === null ? fb : JSON.parse(v) }catch(e){ return fb } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e){} }
+};
+let picks = new Set(store.get('vv26sat', []));
+let view = store.get('vv26tab', 'now');
+if(!['now','grid','stages','mine'].includes(view)) view = 'now';
+let stageFilter = 'all', query = '', closed = new Set(), gridScroll = null, openKey = null;
 
 const tagHTML = x => x.tag ? '<span class="badge'+(x.tag==='Live'?'':' gold')+'">'+esc(x.tag)+'</span>' : '';
 const nameHTML = x => esc(x.a) + (x.b ? ' <span class="b2b">b2b</span> '+esc(x.b) : '');
 const starHTML = x => {
   const on = picks.has(x.key);
   return '<button class="star" data-key="'+x.key+'" aria-pressed="'+on+'" aria-label="'+
-    (on?'Remove ':'Save ')+esc(plain(x))+'">'+(on?'★':'☆')+'</button>';
+    (on ? 'Remove ' : 'Save ')+esc(plain(x))+'">'+(on ? '★' : '☆')+'</button>';
 };
 
 /* ---------------- NOW ---------------- */
 function renderNow(t){
   const now = t.min;
   let h = '';
-  if(now === null) h += '<div class="note"><b>Saturday\'s full running order.</b> Live highlighting switches on during the festival day.</div>';
+  if(now === null) h += '<div class="note"><b>The full Saturday running order.</b> Live highlighting switches on during the festival day.</div>';
   else if(now < DAY_START) h += '<div class="note"><b>Gates at 15:00.</b> First sets start in '+dur(DAY_START-now)+'. Here is who opens each stage.</div>';
   else if(now >= DAY_END) h += '<div class="note"><b>Saturday is done.</b> This is how the night ran.</div>';
 
@@ -422,10 +462,14 @@ function renderNow(t){
       const cur = now === null ? null : st.sets.find(x => now >= x.sm && now < x.em);
       const nxt = st.sets.find(x => now === null ? true : x.sm > now);
       const finished = now !== null && now >= st.sets[st.sets.length-1].em;
-      h += '<article class="card'+(cur ? ' live' : (finished ? ' idle' : ''))+'">';
+      const focus = cur || (finished ? null : nxt);
+      h += '<article class="card'+(cur ? ' live' : (finished ? ' idle' : ''))+'"'+
+           (focus ? ' data-key="'+focus.key+'"' : '')+'>';
       h += '<div class="card-top">'+svg(st.sigil)+'<span class="stage-name">'+esc(st.name)+'</span>'+
-           (st.host ? '<span class="host">'+esc(st.host)+'</span>' : '')+
-           (cur ? '<span class="flag"><i class="pulse"></i>On now</span>' : '')+'</div>';
+           (cur ? '<span class="onair">On now</span>' : '')+
+           (focus ? starHTML(focus) : '')+'</div>';
+      h += '<div class="body">';
+      if(st.host) h += '<div class="host">'+esc(st.host)+'</div>';
       if(cur){
         h += '<div class="artist">'+nameHTML(cur)+tagHTML(cur)+'</div>';
         const pct = Math.round((now-cur.sm)/(cur.em-cur.sm)*100);
@@ -440,7 +484,7 @@ function renderNow(t){
         const wait = now !== null && now >= DAY_START ? ' · <b>in '+dur(nxt.sm-now)+'</b>' : '';
         h += '<div class="meta-line">'+nxt.s+' – '+nxt.e+wait+'</div>';
       }
-      h += '</article>';
+      h += '</div></article>';
     });
   });
   return h;
@@ -452,11 +496,10 @@ function renderGrid(t){
   const live = now !== null && now >= DAY_START && now < DAY_END;
   const nowX = live ? (now-DAY_START)*PX_MIN : null;
 
-  let h = '<div class="grid-tools"><span class="grid-hint">Scroll sideways · tap a set for details</span>'+
-    (live ? '<button class="jump" id="jumpNow">Jump to now</button>' : '')+'</div>';
+  let h = '<div class="grid-tools"><span class="grid-hint">Swipe sideways. Bars in the same column play at the same time.</span>'+
+    (live ? '<button class="jump" id="jumpNow">Now</button>' : '')+'</div>';
 
-  h += '<div class="grid-wrap" id="gridWrap" style="--hourpx:'+HOUR_PX+'px"><div style="width:'+(112+TRACK_W)+'px">';
-
+  h += '<div class="grid-wrap" id="gridWrap" style="--hourpx:'+HOUR_PX+'px"><div style="width:'+(LABEL_W+TRACK_W)+'px">';
   h += '<div class="grow axis"><div class="glabel"></div><div class="gtrack" style="width:'+TRACK_W+'px">';
   for(let m = DAY_START; m <= DAY_END; m += 60){
     const cls = m === DAY_START ? ' first' : m === DAY_END ? ' last' : '';
@@ -474,17 +517,16 @@ function renderGrid(t){
         const on = now !== null && now >= x.sm && now < x.em;
         const done = now !== null && now >= x.em;
         const left = (x.sm-DAY_START)*PX_MIN, w = (x.em-x.sm)*PX_MIN;
-        h += '<button class="blk'+(on?' on':'')+(done?' done':'')+(picks.has(x.key)?' star':'')+
+        h += '<button class="blk'+(on ? ' on' : '')+(done ? ' done' : '')+(picks.has(x.key) ? ' star' : '')+
              '" data-key="'+x.key+'" style="left:'+left+'px;width:'+(w-3)+'px">'+
-             '<b>'+esc(plain(x))+'</b>'+(w > 92 ? '<i>'+x.s+'–'+x.e+'</i>' : '')+'</button>';
+             '<b>'+esc(plain(x))+'</b>'+(w > 96 ? '<i>'+x.s+'–'+x.e+'</i>' : '')+'</button>';
       });
       if(live) h += '<div class="nowline" style="left:'+nowX+'px"></div>';
       h += '</div></div>';
     });
   });
   h += '</div></div>';
-  h += '<div class="note">Bars that line up vertically are running at the same time. '+
-       'Red = playing right now, gold outline = your pick.</div>';
+  h += '<div class="note">Tap any bar for details. Red = playing right now · gold outline = your pick.</div>';
   return h;
 }
 
@@ -493,7 +535,7 @@ function matches(x, st){
   if(!query) return true;
   const q = query.toLowerCase();
   return plain(x).toLowerCase().includes(q) || st.name.toLowerCase().includes(q) ||
-         (x.sub||'').toLowerCase().includes(q);
+         (x.sub || '').toLowerCase().includes(q);
 }
 function renderStages(t){
   const now = t.min;
@@ -507,16 +549,16 @@ function renderStages(t){
     if(!sets.length) return;
     found += sets.length;
     const shut = closed.has(st.id) && !query;
-    h += '<section class="stage-block'+(shut?' closed':'')+'">'+
+    h += '<section class="stage-block'+(shut ? ' closed' : '')+'">'+
          '<button class="stage-head" data-toggle="'+st.id+'" aria-expanded="'+(!shut)+'">'+
          svg(st.sigil)+'<h3>'+esc(st.name)+'</h3>'+
          (st.host ? '<span class="host">'+esc(st.host)+'</span>' : '')+CHEV+'</button><div class="sets">';
     sets.forEach(x => {
       const on = now !== null && now >= x.sm && now < x.em;
       const past = now !== null && now >= x.em;
-      h += '<div class="set'+(on?' live':'')+(past?' past':'')+'">'+
+      h += '<div class="set'+(on ? ' live' : '')+(past ? ' past' : '')+'">'+
            '<div class="set-time">'+x.s+'<span>'+x.e+'</span></div>'+
-           '<div><div class="set-name">'+nameHTML(x)+tagHTML(x)+(on?'<span class="badge now">On now</span>':'')+'</div>'+
+           '<div><div class="set-name">'+nameHTML(x)+tagHTML(x)+(on ? '<span class="badge now">On now</span>' : '')+'</div>'+
            (x.sub ? '<div class="set-sub">'+esc(x.sub)+'</div>' : '')+'</div>'+
            starHTML(x)+'</div>';
     });
@@ -531,9 +573,11 @@ function renderMine(t){
   const now = t.min;
   const list = [...picks].map(k => BY_KEY[k]).filter(Boolean).sort((a,b) => a.sm-b.sm);
   if(!list.length){
-    return '<div class="empty">Your night is empty.<br>Tap ★ next to any set — in Stages, or on a bar in Grid — and it lands here in order, with a warning when two picks overlap.</div>';
+    return '<div class="empty">Your night is empty.<br><br>Tap ★ on any set — in Stages, in Now, or on a bar in Grid — and it lands here in order, with a warning whenever two picks overlap.</div>';
   }
-  let h = '<div class="note"><b>'+list.length+' sets picked.</b> Overlaps are flagged so you know where you have to choose.</div>';
+  const clashCount = list.filter(x => list.some(o => o !== x && o.sm < x.em && x.sm < o.em)).length;
+  let h = '<div class="note"><b>'+list.length+' sets picked.</b> '+
+    (clashCount ? clashCount+' of them overlap with another pick — flagged below.' : 'No overlaps, the whole night fits.')+'</div>';
   list.forEach((x, i) => {
     const on = now !== null && now >= x.sm && now < x.em;
     const past = now !== null && now >= x.em;
@@ -541,9 +585,9 @@ function renderMine(t){
     const prev = list[i-1];
     if(prev && prev.em <= x.sm && x.sm - prev.em > 0)
       h += '<div class="gap">'+dur(x.sm - prev.em)+' free · '+esc(prev.stage.short)+' → '+esc(x.stage.short)+'</div>';
-    h += '<div class="plan-item'+(on?' live':'')+(past?' past':'')+'">'+
+    h += '<div class="plan-item'+(on ? ' live' : '')+(past ? ' past' : '')+'">'+
          '<div class="set-time">'+x.s+'<span>'+x.e+'</span></div>'+
-         '<div><div class="set-name">'+nameHTML(x)+tagHTML(x)+(on?'<span class="badge now">On now</span>':'')+'</div>'+
+         '<div><div class="set-name">'+nameHTML(x)+tagHTML(x)+(on ? '<span class="badge now">On now</span>' : '')+'</div>'+
          '<div class="set-where">'+esc(x.stage.name)+'</div>'+
          (clashes.length ? '<div class="clash">⚠ Overlaps '+clashes.map(c => esc(plain(c))+' ('+esc(c.stage.short)+')').join(', ')+'</div>' : '')+
          '</div>'+starHTML(x)+'</div>';
@@ -553,43 +597,48 @@ function renderMine(t){
 
 /* ---------------- sheet ---------------- */
 function openSheet(key){
-  openKey = key;
   const x = BY_KEY[key];
+  if(!x) return;
+  openKey = key;
   const on = picks.has(key);
-  document.getElementById('sheet').innerHTML =
+  const el = document.getElementById('sheet');
+  el.innerHTML =
     '<div class="sheet" role="dialog" aria-modal="true" aria-label="'+esc(plain(x))+'">'+
+    '<div class="grab"></div>'+
     '<div class="where">'+esc(x.stage.name)+(x.stage.host ? ' · '+esc(x.stage.host) : '')+'</div>'+
     '<h4>'+nameHTML(x)+tagHTML(x)+'</h4>'+
     '<div class="when">'+x.s+' – '+x.e+' · '+dur(x.em-x.sm)+(x.sub ? ' · '+esc(x.sub) : '')+'</div>'+
     '<div class="sheet-actions">'+
       '<button class="sheet-btn" data-close>Close</button>'+
-      '<button class="sheet-btn primary" data-toggle-pick>'+(on ? '★ In my night' : '☆ Add to my night')+'</button>'+
+      '<button class="sheet-btn primary" data-pick>'+(on ? '★ In my night' : '☆ Add to my night')+'</button>'+
     '</div></div>';
-  document.getElementById('sheet').hidden = false;
+  el.hidden = false;
 }
-function closeSheet(){ openKey = null; document.getElementById('sheet').hidden = true }
+const closeSheet = () => { openKey = null; document.getElementById('sheet').hidden = true };
 
 /* ---------------- render ---------------- */
 function render(){
   const t = festNow();
   const live = t.min !== null && t.min >= DAY_START && t.min < DAY_END;
   document.getElementById('pulse').hidden = !live;
-  document.getElementById('clock').textContent =
+  document.getElementById('clock').innerHTML =
     t.min === null ? 'Full timetable · Brussels time'
-    : live ? fmt(t.clock)+' in Brussels · live now'
-    : t.min < DAY_START ? fmt(t.clock)+' in Brussels · '+dur(DAY_START-t.min)+' to gates'
-    : fmt(t.clock)+' in Brussels · festival over';
+    : '<span class="mono">'+fmt(t.clock)+'</span> Brussels · '+
+      (live ? 'live now' : t.min < DAY_START ? dur(DAY_START-t.min)+' to gates' : 'festival over');
 
   const pos = t.min === null ? 0 : Math.min(100, Math.max(0, (t.min-DAY_START)/(DAY_END-DAY_START)*100));
   document.getElementById('railFill').style.width = pos+'%';
   const head = document.getElementById('railHead');
   head.style.left = pos+'%';
   head.hidden = !live;
-  document.getElementById('pickCount').textContent = picks.size;
+
+  const pip = document.getElementById('pip');
+  pip.textContent = picks.size;
+  pip.hidden = !picks.size;
   document.getElementById('searchRow').hidden = view !== 'stages';
 
-  const prev = document.getElementById('gridWrap');
-  if(prev) gridScroll = prev.scrollLeft;
+  const prevGrid = document.getElementById('gridWrap');
+  if(prevGrid) gridScroll = prevGrid.scrollLeft;
 
   document.getElementById('view').innerHTML =
     view === 'now' ? renderNow(t) : view === 'grid' ? renderGrid(t) :
@@ -598,57 +647,56 @@ function render(){
   if(view === 'grid'){
     const w = document.getElementById('gridWrap');
     if(w) w.scrollLeft = gridScroll !== null ? gridScroll
-      : (live ? Math.max(0, (t.min-DAY_START)*PX_MIN - 60) : 0);
+      : (live ? Math.max(0, (t.min-DAY_START)*PX_MIN - 70) : 0);
   }
 }
 
-function scrollToNow(){
-  const t = festNow(), w = document.getElementById('gridWrap');
-  if(!w || t.min === null) return;
-  w.scrollTo({left: Math.max(0, (t.min-DAY_START)*PX_MIN - 60), behavior:'smooth'});
-  gridScroll = null;
+function setView(v){
+  view = v;
+  store.set('vv26tab', v);
+  if(v === 'grid') gridScroll = null;
+  document.querySelectorAll('.tabbar button').forEach(o => o.setAttribute('aria-selected', String(o.dataset.view === v)));
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 function togglePick(k){
   picks.has(k) ? picks.delete(k) : picks.add(k);
-  savePicks();
-  document.getElementById('pickCount').textContent = picks.size;
+  store.set('vv26sat', [...picks]);
+}
+function scrollToNow(){
+  const t = festNow(), w = document.getElementById('gridWrap');
+  if(!w || t.min === null) return;
+  gridScroll = null;
+  w.scrollTo({left: Math.max(0, (t.min-DAY_START)*PX_MIN - 70), behavior:'smooth'});
 }
 
-document.querySelectorAll('.seg button').forEach(b => {
-  b.addEventListener('click', () => {
-    view = b.dataset.view;
-    if(view === 'grid') gridScroll = null;
-    document.querySelectorAll('.seg button').forEach(o => o.setAttribute('aria-selected', String(o === b)));
-    render();
-    window.scrollTo({top:0, behavior:'smooth'});
-  });
-});
-
+document.querySelectorAll('.tabbar button').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
 document.getElementById('q').addEventListener('input', e => { query = e.target.value.trim(); render() });
 
 document.getElementById('view').addEventListener('click', e => {
-  const st = e.target.closest('.star');
-  if(st){ togglePick(st.dataset.key); render(); return }
+  const star = e.target.closest('.star');
+  if(star){ togglePick(star.dataset.key); render(); return }
   const blk = e.target.closest('.blk');
   if(blk){ openSheet(blk.dataset.key); return }
-  const ch = e.target.closest('.chip');
-  if(ch){ stageFilter = ch.dataset.stage; render(); return }
-  const tg = e.target.closest('[data-toggle]');
-  if(tg){ const id = tg.dataset.toggle; closed.has(id) ? closed.delete(id) : closed.add(id); render(); return }
-  if(e.target.closest('#jumpNow')) scrollToNow();
+  const chip = e.target.closest('.chip');
+  if(chip){ stageFilter = chip.dataset.stage; render(); return }
+  const head = e.target.closest('[data-toggle]');
+  if(head){ const id = head.dataset.toggle; closed.has(id) ? closed.delete(id) : closed.add(id); render(); return }
+  if(e.target.closest('#jumpNow')) return scrollToNow();
+  const card = e.target.closest('.card[data-key]');
+  if(card) openSheet(card.dataset.key);
 });
 
 document.getElementById('sheet').addEventListener('click', e => {
   if(e.target.id === 'sheet' || e.target.closest('[data-close]')) return closeSheet();
-  if(e.target.closest('[data-toggle-pick]')){
-    const k = openKey;
-    togglePick(k);
-    closeSheet();
-    render();
-  }
+  if(e.target.closest('[data-pick]')){ togglePick(openKey); closeSheet(); render() }
 });
 document.addEventListener('keydown', e => { if(e.key === 'Escape' && openKey) closeSheet() });
 
+document.querySelectorAll('.tabbar button').forEach(o => o.setAttribute('aria-selected', String(o.dataset.view === view)));
 render();
 setInterval(render, 30000);
+document.addEventListener('visibilitychange', () => { if(!document.hidden) render() });
 </script>
+</body>
+</html>
