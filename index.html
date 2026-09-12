@@ -5,29 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#FFFFFF" id="tc">
-<meta name="apple-mobile-web-app-title" content="VV Saturday">
-<meta name="description" content="Voodoo Village 2026 — Saturday 12 September timetable for all ten stages, with a live now-playing view and a personal plan.">
-<title>Voodoo Village · Saturday 12 Sep</title>
+<meta name="apple-mobile-web-app-title" content="Voodoo">
+<meta name="description" content="Voodoo Village 2026 — Saturday and Sunday timetables for all ten stages, with a live now-playing view, an overlap-aware personal plan and artist links.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%2312140E'/%3E%3Ccircle cx='32' cy='32' r='27.5' fill='none' stroke='%23C9D96C' stroke-width='1.4'/%3E%3Cg fill='none' stroke='%23F2EEDF' stroke-width='4'%3E%3Ccircle cx='32' cy='32' r='19.5' stroke-dasharray='95.3 27.2' transform='rotate(120 32 32)'/%3E%3Ccircle cx='32' cy='32' r='12.5' stroke-dasharray='61.1 17.4' transform='rotate(210 32 32)'/%3E%3Ccircle cx='32' cy='32' r='5.4' stroke-dasharray='26.4 7.5' transform='rotate(300 32 32)'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Voodoo Village · Weekend Timetable</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
   :root{
-    --bg:#FFFFFF;
-    --panel:#F2F4EC;
-    --panel-2:#E5EADB;
-    --ink:#161A12;
-    --ink-2:#4B5343;
-    --ink-3:#6F7765;
+    --bg:#FFFFFF; --panel:#F2F4EC; --panel-2:#E5EADB;
+    --ink:#161A12; --ink-2:#4B5343; --ink-3:#6F7765;
     --line:#DBE0D0;
-    --green:#2E6B3C;
-    --green-soft:#EBF2E6;
-    --live:#C8481B;
-    --live-soft:#FCEDE5;
-    --gold:#8A6A12;
-    --gold-soft:#FBF3DC;
-    --olive:#C9D96C;
-    --olive-ink:#252B07;
+    --green:#2E6B3C; --green-soft:#EBF2E6;
+    --live:#C8481B; --live-soft:#FCEDE5;
+    --gold:#8A6A12; --gold-soft:#FBF3DC;
+    --olive:#C9D96C; --olive-ink:#252B07;
     --sans:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
     --mono:"IBM Plex Mono","SF Mono",Menlo,monospace;
     --disp:"Zilla Slab",Georgia,"Times New Roman",serif;
@@ -56,50 +50,49 @@
 
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html{-webkit-text-size-adjust:100%;overflow-x:clip}
-  body{
-    margin:0;background:var(--bg);color:var(--ink);
-    font-family:var(--sans);font-size:16px;line-height:1.5;
-    -webkit-font-smoothing:antialiased;overflow-x:clip;
-  }
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;
+    line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:clip}
   button{font-family:inherit;touch-action:manipulation}
+  a{color:inherit}
   [hidden]{display:none!important}
+  :focus-visible{outline:2px solid var(--live);outline-offset:2px}
   .wrap{max-width:480px;margin:0 auto;padding:0 16px calc(var(--tabh) + 40px + env(safe-area-inset-bottom))}
 
-  /* ---------- hero ---------- */
-  .hero{padding:22px 0 14px}
+  /* hero */
+  .hero{padding:20px 0 12px}
   .mark{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.13em;
     text-transform:uppercase;color:var(--green);line-height:1.1}
   .kicker{margin-top:5px;font-size:10.5px;font-weight:600;letter-spacing:.15em;
     text-transform:uppercase;color:var(--ink-3)}
-  .hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(31px,9.4vw,40px);line-height:1.02;
-    margin:14px 0 0;letter-spacing:-.01em}
-  .doublerule{margin-top:12px;height:4px;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink)}
+  .hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,9vw,38px);line-height:1.02;
+    margin:13px 0 0;letter-spacing:-.01em}
+  .doublerule{margin-top:11px;height:4px;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink)}
   .subline{margin:9px 0 0;font-size:13.5px;color:var(--ink-2)}
   .subline b{color:var(--ink);font-weight:600}
 
-  /* ---------- sticky status ---------- */
+  /* sticky bar */
   .statusbar{position:sticky;top:0;z-index:30;background:var(--bg);margin:0 -16px;padding:8px 16px 0;
     border-bottom:1px solid var(--line)}
-  .status{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-2);
-    min-height:34px}
-  .status .mono{font-family:var(--mono)}
-  .pulse{width:8px;height:8px;border-radius:50%;background:var(--live);flex:none;
-    animation:pulse 2.2s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.28}}
-  @media (prefers-reduced-motion:reduce){.pulse{animation:none}}
-  #clock{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .toprow{display:flex;align-items:center;gap:6px}
+  .dayseg{display:flex;gap:3px;background:var(--panel);border-radius:10px;padding:3px;flex:none}
+  .dayseg button{border:0;background:transparent;color:var(--ink-2);font-size:12.5px;font-weight:700;
+    padding:8px 11px;border-radius:8px;cursor:pointer;white-space:nowrap}
+  .dayseg button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+  .statusbtn{flex:1;min-width:0;display:block;background:transparent;border:0;text-align:left;
+    color:var(--ink-2);font-size:12.5px;font-weight:600;padding:0 2px;overflow:hidden;
+    white-space:nowrap;text-overflow:ellipsis;cursor:default}
+  .statusbtn.islive{color:var(--live);cursor:pointer}
+  .statusbtn .mono{font-family:var(--mono)}
   .icon-btn{appearance:none;border:0;background:transparent;color:var(--ink-2);width:34px;height:34px;
     border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
   .icon-btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;
     stroke-linecap:round;stroke-linejoin:round}
-  .now-pill{appearance:none;border:0;background:var(--live);color:#fff;border-radius:8px;
-    padding:7px 11px;font-size:12px;font-weight:700;letter-spacing:.04em;cursor:pointer;flex:none}
   .toast{position:fixed;left:50%;bottom:calc(var(--tabh) + 20px + env(safe-area-inset-bottom));
     transform:translateX(-50%);background:var(--ink);color:var(--bg);font-size:13.5px;font-weight:600;
     padding:11px 17px;border-radius:11px;z-index:60;box-shadow:0 6px 20px rgba(0,0,0,.28);
     max-width:calc(100vw - 40px);text-align:center}
 
-  /* ---------- day scrubber ---------- */
+  /* scrubber */
   .scrub{position:relative;height:30px;display:flex;align-items:center;touch-action:none;cursor:pointer}
   .scrub-track{position:relative;width:100%;height:6px;border-radius:3px;background:var(--panel-2)}
   .scrub-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--green)}
@@ -114,37 +107,36 @@
     color:var(--ink-3);padding-bottom:7px}
   .scrub:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:6px}
 
-  /* ---------- bottom tabs ---------- */
+  /* bottom tabs */
   .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--bg);
     border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
   .tabbar-in{max-width:480px;margin:0 auto;display:flex}
-  .tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-    height:var(--tabh);border:0;background:transparent;color:var(--ink-3);font-size:11px;font-weight:600;
-    cursor:pointer;position:relative}
+  .tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:3px;height:var(--tabh);border:0;background:transparent;color:var(--ink-3);font-size:11px;
+    font-weight:600;cursor:pointer;position:relative}
   .tabbar button[aria-selected="true"]{color:var(--live)}
   .tabbar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;
     stroke-linecap:round;stroke-linejoin:round}
-  .tabbar .pip{position:absolute;top:6px;left:calc(50% + 9px);min-width:17px;height:17px;border-radius:9px;
-    background:var(--gold);color:var(--bg);font-family:var(--mono);font-size:10px;font-weight:600;
-    display:flex;align-items:center;justify-content:center;padding:0 4px}
+  .tabbar .pip{position:absolute;top:6px;left:calc(50% + 9px);min-width:17px;height:17px;
+    border-radius:9px;background:var(--gold);color:var(--bg);font-family:var(--mono);font-size:10px;
+    font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 4px}
 
-  :focus-visible{outline:2px solid var(--live);outline-offset:2px}
-
-  /* ---------- search ---------- */
+  /* search */
   #searchRow{margin:12px 0 4px}
   #q{width:100%;appearance:none;background:var(--panel);border:1px solid transparent;border-radius:12px;
     padding:13px 14px;font-family:var(--sans);font-size:16px;color:var(--ink)}
   #q::placeholder{color:var(--ink-3)}
 
-  /* ---------- headings ---------- */
+  /* headings */
   .group{display:flex;align-items:baseline;gap:10px;margin:22px 0 11px}
   .group h2{margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
     color:var(--ink-3);white-space:nowrap}
   .group .hr{flex:1;height:1px;background:var(--line)}
 
-  /* ---------- NOW cards ---------- */
+  /* now cards */
   .card{border:1px solid var(--line);border-radius:13px;padding:13px 8px 14px 15px;margin-bottom:10px;
     background:var(--bg)}
+  .card[data-key]{cursor:pointer}
   .card.live{border-color:var(--live);border-left-width:4px;background:var(--live-soft)}
   .card.idle{background:var(--panel)}
   .card-top{display:flex;align-items:center;gap:7px;min-height:32px}
@@ -152,8 +144,9 @@
   .card.live .sigil{color:var(--live)}
   .stage-name{font-family:var(--disp);font-size:15px;font-weight:600}
   .host{font-size:12px;color:var(--ink-3)}
-  .onair{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.1em;
-    text-transform:uppercase;color:#fff;background:var(--live);border-radius:5px;padding:3px 7px}
+  .onair{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--live);
+    border-radius:5px;padding:3px 7px}
   .card .star{margin-left:auto}
   .body{padding-right:7px}
   .artist{font-size:21px;font-weight:700;line-height:1.15;letter-spacing:-.01em;margin-top:4px}
@@ -165,34 +158,32 @@
   .prog-txt{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink-2);white-space:nowrap}
   .meta-line{margin-top:7px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2)}
   .meta-line b{color:var(--live);font-weight:600}
-  .next{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);
-    display:flex;gap:9px;align-items:baseline;font-size:14px}
+  .next{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);display:flex;gap:9px;
+    align-items:baseline;font-size:14px}
   .next .lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
   .next .t{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green)}
   .next .n{font-weight:600}
 
-  /* ---------- GRID ---------- */
+  /* grid */
   .grid-tools{display:flex;align-items:center;gap:8px;margin:14px 0 10px;min-height:40px}
   .grid-hint{font-size:12.5px;color:var(--ink-3);line-height:1.3}
-  .jump{appearance:none;border:0;background:var(--live);color:#fff;border-radius:10px;
-    padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;margin-left:auto;white-space:nowrap}
   .grid-wrap{overflow-x:auto;overflow-y:hidden;margin:0 -16px;padding-bottom:8px;
     -webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
   .grow{display:flex;align-items:stretch}
   .glabel{position:sticky;left:0;z-index:2;flex:none;width:110px;background:var(--bg);
     border-right:1px solid var(--line);padding:0 6px 0 14px;display:flex;align-items:center;gap:6px}
   .glabel .sigil{width:12px;height:12px}
-  .glabel span{font-size:10.5px;font-weight:700;letter-spacing:0;line-height:1.1}
+  .glabel span{font-size:10.5px;font-weight:700;line-height:1.1}
   .gtrack{position:relative;flex:none;height:100%}
-  .grow.axis{height:24px;position:relative}
+  .grow.axis{height:24px}
   .axis-tick{position:absolute;top:5px;font-family:var(--mono);font-size:11px;color:var(--ink-3);
     transform:translateX(-50%);white-space:nowrap}
   .axis-tick.first{transform:none}
   .axis-tick.last{transform:translateX(-100%)}
   .grow.lane{height:48px;border-top:1px solid var(--line)}
   .grow.lane .gtrack{background-image:repeating-linear-gradient(to right,var(--line) 0 1px,transparent 1px var(--hourpx))}
-  .gcap{position:sticky;left:0;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--ink-3);padding:13px 16px 5px;width:min(100%,300px)}
+  .gcap{position:sticky;left:0;font-size:10px;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-3);padding:13px 16px 5px;width:min(100%,300px)}
   .blk{position:absolute;top:5px;bottom:5px;border-radius:8px;border:1px solid var(--green);
     background:var(--green-soft);color:var(--ink);padding:4px 7px;overflow:hidden;text-align:left;
     cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:1px}
@@ -213,7 +204,7 @@
     font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px;
     white-space:nowrap;z-index:2}
 
-  /* ---------- stages ---------- */
+  /* stages */
   .chips{display:flex;gap:7px;overflow-x:auto;padding:12px 16px;margin:0 -16px;scrollbar-width:none}
   .chips::-webkit-scrollbar{display:none}
   .chip{flex:none;appearance:none;background:var(--panel);border:0;color:var(--ink-2);
@@ -225,14 +216,14 @@
     color:var(--ink);text-align:left}
   .stage-head .sigil{width:32px;height:32px;padding:6px;border:1px solid var(--line);border-radius:50%}
   .stage-head h3{margin:0;font-family:var(--disp);font-size:20px;font-weight:700;letter-spacing:-.01em}
-  .stage-head .host{margin-left:auto;max-width:42%;text-align:right;line-height:1.2}
+  .stage-head .host{margin-left:auto;max-width:40%;text-align:right;line-height:1.2}
   .chev{width:15px;height:15px;flex:none;color:var(--ink-3);transition:transform .18s}
   .stage-block.closed .chev{transform:rotate(-90deg)}
   @media (prefers-reduced-motion:reduce){.chev{transition:none}}
   .stage-block.closed .sets{display:none}
   .set{display:grid;grid-template-columns:56px 1fr 44px;gap:10px;align-items:center;
     padding:10px 0 10px 10px;border-bottom:1px solid var(--line);border-left:4px solid transparent;
-    margin-left:-14px;min-height:60px}
+    margin-left:-14px;min-height:60px;cursor:pointer}
   .set.live{border-left-color:var(--live);background:var(--live-soft)}
   .set.past .set-name,.set.past .set-time{color:var(--ink-3)}
   .set-time{font-family:var(--mono);font-size:13px;font-weight:600}
@@ -250,10 +241,10 @@
     align-items:center;justify-content:center;flex:none}
   .star[aria-pressed="true"]{color:var(--gold)}
 
-  /* ---------- my night ---------- */
+  /* my night */
   .plan-item{display:grid;grid-template-columns:56px 1fr 44px;gap:10px;align-items:center;
     padding:12px 0 12px 10px;border-left:4px solid var(--green);border-bottom:1px solid var(--line);
-    margin-left:-14px}
+    margin-left:-14px;cursor:pointer}
   .plan-item.live{border-left-color:var(--live);background:var(--live-soft)}
   .plan-item.past{border-left-color:var(--line)}
   .plan-item.past .set-name,.plan-item.past .set-time{color:var(--ink-3)}
@@ -265,24 +256,37 @@
     font-size:13.5px;color:var(--ink-2);line-height:1.5}
   .note b{color:var(--ink)}
 
-  /* ---------- sheet ---------- */
+  /* sheet */
   .backdrop{position:fixed;inset:0;background:rgba(10,14,9,.55);z-index:50;display:flex;
     align-items:flex-end;justify-content:center}
-  .sheet{width:100%;max-width:480px;background:var(--bg);border-radius:18px 18px 0 0;
-    padding:10px 18px calc(24px + env(safe-area-inset-bottom));border-top:3px solid var(--live);
-    animation:rise .18s ease-out}
+  .sheet{width:100%;max-width:480px;max-height:88vh;overflow-y:auto;background:var(--bg);
+    border-radius:18px 18px 0 0;padding:10px 18px calc(24px + env(safe-area-inset-bottom));
+    border-top:3px solid var(--live);animation:rise .18s ease-out}
   @keyframes rise{from{transform:translateY(14px)}to{transform:none}}
   @media (prefers-reduced-motion:reduce){.sheet{animation:none}}
   .grab{width:38px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 14px}
-  .sheet .where{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
-  .sheet h4{margin:8px 0 0;font-size:24px;font-weight:700;line-height:1.15;letter-spacing:-.01em}
-  .sheet .when{margin-top:8px;font-family:var(--mono);font-size:14px;color:var(--ink-2)}
-  .sheet-actions{display:flex;gap:9px;margin-top:18px}
+  .sheet .where{font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--green)}
+  .sheet h4{margin:8px 0 0;font-family:var(--disp);font-size:26px;font-weight:700;line-height:1.12;
+    letter-spacing:-.01em}
+  .sheet .when{margin-top:7px;font-family:var(--mono);font-size:13.5px;color:var(--ink-2)}
+  .genres{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .gtag{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+    background:var(--green-soft);color:var(--green);border-radius:999px;padding:5px 11px}
+  .bio{margin:12px 0 0;font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+  .linklbl{margin-top:15px;font-size:10.5px;font-weight:700;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--ink-3)}
+  .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .link{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:10px;
+    padding:10px 13px;font-size:13.5px;font-weight:600;text-decoration:none;background:var(--bg)}
+  .link svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;
+    stroke-linecap:round;stroke-linejoin:round}
+  .sheet-actions{display:flex;gap:9px;margin-top:20px}
   .sheet-btn{flex:1;appearance:none;border:1px solid var(--line);background:var(--bg);color:var(--ink);
     border-radius:12px;padding:15px;font-size:15px;font-weight:600;cursor:pointer}
   .sheet-btn.primary{background:var(--gold);border-color:var(--gold);color:#fff}
-  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sheet-btn.primary{color:#12150F}}
-  :root[data-theme="dark"] .sheet-btn.primary{color:#12150F}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sheet-btn.primary{color:#12140E}}
+  :root[data-theme="dark"] .sheet-btn.primary{color:#12140E}
 
   footer{margin-top:26px;padding-top:15px;border-top:1px solid var(--line);
     font-size:12.5px;color:var(--ink-3);line-height:1.6}
@@ -294,27 +298,28 @@
   <header class="hero">
     <div class="mark">Voodoo Village</div>
     <div class="kicker">Grimbergen · 11–13 September 2026</div>
-    <h1>Saturday 12 September</h1>
+    <h1 id="dayTitle">Saturday 12 September</h1>
     <div class="doublerule"></div>
-    <p class="subline"><b>10 stages</b> · <b>57 sets</b> · 15:00 → 01:00 · all times Brussels</p>
+    <p class="subline" id="daySub"></p>
   </header>
 
   <div class="statusbar">
-    <div class="status">
-      <i class="pulse" id="pulse"></i><span id="clock">Loading…</span>
-      <button class="now-pill" id="nowPill" hidden>Now</button>
+    <div class="toprow">
+      <div class="dayseg" role="tablist" aria-label="Festival day">
+        <button role="tab" data-day="sat" aria-selected="true">Sat 12</button>
+        <button role="tab" data-day="sun" aria-selected="false">Sun 13</button>
+      </div>
+      <button class="statusbtn" id="statusBtn">Loading…</button>
       <button class="icon-btn" id="shareBtn" aria-label="Share this timetable">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.2" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.8" r="2.6"/><path d="M8.3 10.7 15.7 6.5M8.3 13.3l7.4 4.2"/></svg>
       </button>
       <button class="icon-btn" id="themeBtn" aria-label="Switch theme"></button>
     </div>
     <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Jump to a time of day"
-         aria-valuemin="900" aria-valuemax="1500" aria-valuenow="900" aria-valuetext="15:00">
-      <div class="scrub-track" id="scrubTrack">
-        <div class="scrub-fill" id="scrubFill"></div>
-      </div>
+         aria-valuemin="0" aria-valuemax="1" aria-valuenow="0" aria-valuetext="start">
+      <div class="scrub-track" id="scrubTrack"><div class="scrub-fill"></div></div>
     </div>
-    <div class="scrub-labels"><span>15</span><span>17</span><span>19</span><span>21</span><span>23</span><span>01</span></div>
+    <div class="scrub-labels" id="scrubLabels"></div>
   </div>
 
   <div id="searchRow" hidden>
@@ -324,7 +329,8 @@
   <main id="view"></main>
 
   <footer>
-    From the official Saturday timetable. Set times can shift on the day — trust the stage, not the minute.<br>
+    Times come from the official Voodoo Village timetables. They can shift on the day — trust the stage, not the minute.<br>
+    Artist links go to the acts' own pages; write-ups are only there where they could be checked.<br>
     Tap ★ to build your night; picks are saved in this browser only.<br>
     On a phone: Share → Add to Home Screen, and it opens like an app.
   </footer>
@@ -360,56 +366,81 @@ const SIGILS = {
   burst:'<circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3.4M12 18.6V22M2 12h3.4M18.6 12H22M4.9 4.9l2.4 2.4M16.7 16.7l2.4 2.4M19.1 4.9l-2.4 2.4M7.3 16.7l-2.4 2.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>'
 };
 const CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const IG_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>';
+const SP_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M7.6 9.6c3-.7 6.1-.4 8.8 1M8.2 12.6c2.4-.5 4.9-.3 7.1.8M8.8 15.5c1.9-.4 3.8-.2 5.6.6"/></svg>';
+const SC_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17V11M7 17V9.5M10 17V8M13 17V7.2"/><path d="M15.5 17h2.9a2.9 2.9 0 0 0 0-5.8c-.2 0-.5 0-.7.1A4.4 4.4 0 0 0 15.5 8"/></svg>';
 
 const GROUPS = [
   {id:'floors', label:'Dancefloors'},
   {id:'corners', label:'Bars & corners'},
   {id:'mind', label:'Body & mind'}
 ];
+const IG = 'https://www.instagram.com/';
 
-const STAGES = [
+const DAYS = [
+{
+  id:'sat', tab:'Sat 12', title:'Saturday 12 September', date:'2026-09-12', next:'2026-09-13',
+  start:'15:00', end:'01:00',
+  stages:[
   {id:'forest', name:'The Forest', short:'Forest', group:'floors', sigil:'labyrinth', sets:[
-    {a:'Odrik', s:'15:00', e:'17:00'},
-    {a:'BLCK Mamba', s:'17:00', e:'18:30'},
-    {a:'Carlita', s:'18:30', e:'20:30'},
-    {a:'Omri.', s:'20:30', e:'22:30'},
-    {a:'DJ Tennis', b:'Mita Gami', s:'22:30', e:'01:00'}
+    {a:'Odrik', s:'15:00', e:'17:00', ig:IG+'odrikg/'},
+    {a:'BLCK Mamba', s:'17:00', e:'18:30', ig:IG+'blck.mmba/'},
+    {a:'Carlita', s:'18:30', e:'20:30', ig:IG+'carlita/',
+     g:['Melodic house','Anatolian psych'],
+     bio:'Istanbul-born, New York-based DJ and producer who folds Anatolian melody and psychedelic rock into slow, hypnotic house. Releases on Life and Death and Watergate.'},
+    {a:'Omri.', s:'20:30', e:'22:30', ig:IG+'its_omri_dot/'},
+    {a:'DJ Tennis', b:'Mita Gami', s:'22:30', e:'01:00', ig:IG+'djtennis/',
+     g:['Eclectic','Melodic techno'],
+     bio:'Manfredi Romano — DJ Tennis — founded the Life and Death label and is known for sets that swerve from indie-dance to techno without warning. Mita Gami holds the melodic techno end of the booth.'}
   ]},
   {id:'yard', name:'The Yard', short:'Yard', group:'floors', sigil:'spiral', sets:[
-    {a:'Luna & Lenthe', s:'15:00', e:'17:00'},
-    {a:'Stasi Sanlin', s:'17:00', e:'18:30'},
-    {a:'NOHR', s:'18:30', e:'19:30', tag:'Live'},
-    {a:'Maxi Meraki', b:'Son of Son', s:'19:30', e:'21:30'},
-    {a:'Agents Of Time', s:'21:30', e:'23:00'},
-    {a:'Mathame', s:'23:00', e:'01:00'}
+    {a:'Luna & Lenthe', s:'15:00', e:'17:00', ig:IG+'lunalenthe/'},
+    {a:'Stasi Sanlin', s:'17:00', e:'18:30', ig:IG+'stasi_sanlin/'},
+    {a:'NOHR', s:'18:30', e:'19:30', tag:'Live', ig:IG+'nohr_ofc/'},
+    {a:'Maxi Meraki', b:'Son of Son', s:'19:30', e:'21:30', ig:IG+'maximeraki/'},
+    {a:'Agents Of Time', s:'21:30', e:'23:00', ig:IG+'agentsoftime/',
+     g:['Melodic techno','Live'],
+     bio:'Italian trio from Rome who play as a live electronic act — analogue synths, cinematic builds, a regular fixture in the Afterlife orbit.'},
+    {a:'Mathame', s:'23:00', e:'01:00', ig:IG+'mathame_/',
+     g:['Melodic techno','Cinematic'],
+     bio:'Sicilian brothers Amedeo and Matteo Giovanelli, known for euphoric, slow-building melodic techno and a long run of Afterlife releases.'}
   ]},
   {id:'shelter', name:'The Shelter', short:'Shelter', group:'floors', sigil:'triangle', sets:[
-    {a:'Amalie', s:'15:00', e:'17:00'},
-    {a:'Thelma', s:'17:00', e:'19:00'},
-    {a:'Marrøn', s:'19:00', e:'21:00'},
-    {a:'Elli Acula', s:'21:00', e:'22:30'},
-    {a:'Len Faki', b:'Quest', s:'22:30', e:'01:00'}
+    {a:'Amalie', s:'15:00', e:'17:00', ig:IG+'amaliedeneyer/'},
+    {a:'Thelma', s:'17:00', e:'19:00', ig:IG+'thelma.chavonnet/'},
+    {a:'Marrøn', s:'19:00', e:'21:00', ig:IG+'marron.ec/'},
+    {a:'Elli Acula', s:'21:00', e:'22:30', ig:IG+'elli.acula/', g:['Techno']},
+    {a:'Len Faki', b:'Quest', s:'22:30', e:'01:00', ig:IG+'len_faki/', g:['Techno'],
+     bio:'Len Faki is a long-standing Berghain resident and one of the defining DJs of Berlin techno, running the Figure label. Expect a hard, precise close to the night.'}
   ]},
-  {id:'oracle', name:'The Oracle', short:'Oracle', group:'floors', sigil:'star', sets:[
-    {a:'Opening Ceremony', s:'15:00', e:'16:30'},
-    {a:'Mushina', s:'16:30', e:'18:00', tag:'Live'},
-    {a:'Ginton', s:'18:00', e:'19:15'},
-    {a:'CØPAL', s:'19:15', e:'20:30', tag:'Hybrid live'},
-    {a:'Jarl Flamar', s:'20:30', e:'22:00'},
-    {a:'Sinego', s:'22:00', e:'23:30', tag:'Timbales DJ set'},
-    {a:'Deer Jade', s:'23:30', e:'01:00'}
+  {id:'oracle', name:'The Oracle', short:'Oracle', group:'floors', sigil:'star',
+   host:'The Oracle Experience', sets:[
+    {a:'Opening Ceremony', s:'15:00', e:'16:30',
+     bio:'The Oracle opens its day with a ceremony rather than a DJ set — the stage runs its own ritual programme alongside the music.'},
+    {a:'Mushina', s:'16:30', e:'18:00', tag:'Live', ig:IG+'mushinamusic/'},
+    {a:'Ginton', s:'18:00', e:'19:15', ig:IG+'gintonmusic'},
+    {a:'CØPAL', s:'19:15', e:'20:30', tag:'Hybrid live', ig:IG+'copalmusic/'},
+    {a:'Jarl Flamar', s:'20:30', e:'22:00', ig:IG+'jarl_flamar/'},
+    {a:'Sinego', s:'22:00', e:'23:30', tag:'Timbales DJ set', ig:IG+'sinego/',
+     g:['Latin electronic','Bolero'],
+     bio:'Colombian producer who blends bolero and Latin song with club electronics. Here in his timbales set, with live percussion over the records.'},
+    {a:'Deer Jade', s:'23:30', e:'01:00', ig:IG+'deerjade/', g:['Melodic house','Organic']}
   ]},
   {id:'observatory', name:'The Observatory', short:'Observatory', group:'floors', sigil:'coil',
    host:'Helena Lauwaert & Friends', sets:[
-    {a:'Stanislawa', s:'15:00', e:'17:00'},
-    {a:'Miamor', s:'17:00', e:'18:30'},
-    {a:'Sam Alfred', s:'18:30', e:'20:30'},
-    {a:'Young Marco', s:'20:30', e:'22:30'},
-    {a:'Helena Lauwaert', b:'Saidah', s:'22:30', e:'01:00'}
+    {a:'Stanislawa', s:'15:00', e:'17:00', ig:IG+'stanislawa.dde'},
+    {a:'Miamor', s:'17:00', e:'18:30', ig:IG+'miamor.dw/'},
+    {a:'Sam Alfred', s:'18:30', e:'20:30', ig:IG+'samalfredd/'},
+    {a:'Young Marco', s:'20:30', e:'22:30', ig:IG+'youngmarco/',
+     g:['Balearic','Leftfield'],
+     bio:'Amsterdam selector Marco Sterk, who runs the Safe Trip label and is known for Balearic, ambient and oddball dance records nobody else is playing.'},
+    {a:'Helena Lauwaert', b:'Saidah', s:'22:30', e:'01:00', ig:IG+'helenalauwaert/',
+     bio:'Helena Lauwaert curates this stage for the day — the timetable runs as her invitation, closing back to back with Saidah.'}
   ]},
   {id:'glasshouse', name:'The Glasshouse', short:'Glasshouse', group:'corners', sigil:'cross',
    host:'Aperol Spritz', sets:[
-    {a:'Lexx', s:'15:00', e:'17:00'},
+    {a:'Lexx', s:'15:00', e:'17:00', g:['Balearic','Cosmic disco'],
+     bio:'Swiss producer and DJ Alex Storrer, a long-time fixture of the Balearic and cosmic disco world.'},
     {a:'Christian 82', s:'17:00', e:'19:00'},
     {a:'Florist', s:'19:00', e:'21:00'},
     {a:'Rode', s:'21:00', e:'23:00'},
@@ -450,21 +481,136 @@ const STAGES = [
     {a:'Melody Van Gompel', s:'21:30', e:'22:00'},
     {a:'Lyna', s:'22:10', e:'22:40'}
   ]}
+]},
+{
+  id:'sun', tab:'Sun 13', title:'Sunday 13 September', date:'2026-09-13', next:'2026-09-14',
+  start:'14:00', end:'00:00',
+  stages:[
+  {id:'forest', name:'The Forest', short:'Forest', group:'floors', sigil:'labyrinth', sets:[
+    {a:'Isa Roos', s:'14:00', e:'15:30', ig:IG+'isa__roos/'},
+    {a:'Meera', s:'15:30', e:'17:00', ig:IG+'meera_etc/'},
+    {a:'&ME', s:'17:00', e:'20:00', ig:IG+'andmeandyou/',
+     g:['House','Keinemusik'],
+     bio:'Berlin producer and one third of Keinemusik, alongside Rampa and Adam Port. Deep, melodic, vocal-led house — and a three-hour slot to stretch it out.'},
+    {a:'Jimi Jules', b:'Ry X', s:'20:00', e:'22:00', tag:'DJ set', ig:IG+'ryx/',
+     g:['Melodic house'],
+     bio:'Swiss producer Jimi Jules goes back to back with RY X, the Australian songwriter behind Howling, here playing records rather than singing.'},
+    {a:'Samm', b:'Ajna', s:'22:00', e:'00:00', ig:IG+'samm___music/'}
+  ]},
+  {id:'yard', name:'The Yard', short:'Yard', group:'floors', sigil:'spiral', sets:[
+    {a:'Juwlz', s:'14:00', e:'16:00', ig:IG+'juwlz.music/'},
+    {a:'Nico Morano', s:'16:00', e:'17:30', ig:IG+'nico_morano/', g:['Melodic house']},
+    {a:'Fiona Kraft', s:'17:30', e:'19:00', ig:IG+'fionakraft/'},
+    {a:'Monolink', s:'19:00', e:'20:30', tag:'Live', ig:IG+'monolinkmusic/',
+     g:['Live','Melodic electronica'],
+     bio:'Steffen Linck performs as a genuine live act — acoustic guitar and his own vocals layered over melodic electronica, not a DJ set.'},
+    {a:'The Blaze', s:'20:30', e:'22:00', tag:'DJ set', ig:IG+'theblazeprod/',
+     g:['French house','Emotive'],
+     bio:'French cousins Guillaume and Jonathan Alric, as known for their intensely intimate music videos as for their warm, emotive house.'},
+    {a:'Vintage Culture', s:'22:00', e:'00:00', ig:IG+'vintageculture',
+     g:['House','Big room'],
+     bio:'Brazilian producer Lukas Ruiz, one of the biggest names in mainstream melodic house — a festival closer in the fullest sense.'}
+  ]},
+  {id:'shelter', name:'The Shelter', short:'Shelter', group:'floors', sigil:'triangle',
+   host:'BCCO', sets:[
+    {a:'BILLY', s:'14:00', e:'16:00', ig:IG+'billywasunavailable/'},
+    {a:'Riana Holley', s:'16:00', e:'18:00', ig:IG+'riana.holley/'},
+    {a:'future.666', b:'ÜBERKIKZ', s:'18:00', e:'20:00', ig:IG+'future.666/'},
+    {a:'Adrián Mills', s:'20:00', e:'22:00', ig:IG+'adrianxmills/'},
+    {a:'Cloudy', b:'Øtta', s:'22:00', e:'00:00', ig:IG+'cloudy.mp3_/'}
+  ]},
+  {id:'oracle', name:'The Oracle', short:'Oracle', group:'floors', sigil:'star',
+   host:'BOHO Experience', sets:[
+    {a:'Opening Ceremony', s:'14:15', e:'16:15',
+     bio:'The Oracle opens its day with a ceremony rather than a DJ set — the stage runs its own ritual programme alongside the music.'},
+    {a:'Solaene', s:'16:15', e:'17:00', ig:IG+'solaenemusic/'},
+    {a:'Afnan Prince', s:'17:00', e:'18:00', ig:IG+'afnanprince/'},
+    {a:'Riche', s:'18:00', e:'19:30', ig:IG+'riche/'},
+    {a:'Camilo Franco & Nadja', s:'19:30', e:'21:00'},
+    {a:'Parra For Cuva', s:'21:00', e:'22:30', tag:'Live', ig:IG+'parra_for_cuva/',
+     g:['Downtempo','Live'],
+     bio:'German producer Nicolas Demuth, whose downtempo, string-heavy electronica sits closer to a concert than a club set.'},
+    {a:'Rampue', s:'22:30', e:'00:00', tag:'Live', ig:IG+'rampue/', g:['Live','Melodic electronica']}
+  ]},
+  {id:'observatory', name:'The Observatory', short:'Observatory', group:'floors', sigil:'coil',
+   host:'Traum', sets:[
+    {a:'Mariona', s:'14:00', e:'16:00', ig:IG+'mariona_puig/'},
+    {a:'Tori Ann', s:'16:00', e:'18:00', ig:IG+'torii.aann/'},
+    {a:'Nosedrip', b:'Oko Stellar', s:'18:00', e:'20:00', ig:IG+'nosedrip/',
+     g:['Leftfield','Ambient'],
+     bio:'Ghent selector behind the Stroom label, known for digging up obscure ambient, minimal wave and Belgian oddities that had been written off.'},
+    {a:'Blasha & Allatt', s:'20:00', e:'22:00', ig:IG+'blashaallatt/', g:['Fast techno']},
+    {a:'DVS1', s:'22:00', e:'00:00', ig:IG+'dvs1hush/', g:['Techno'],
+     bio:'Zak Khutoretsky, Minneapolis techno DJ and founder of HUSH, famous for long, dynamic sets and an obsession with how the sound system is tuned.'}
+  ]},
+  {id:'glasshouse', name:'The Glasshouse', short:'Glasshouse', group:'corners', sigil:'cross',
+   host:'Aperol Spritz', sets:[
+    {a:'Filston', s:'14:00', e:'16:00'},
+    {a:'Sentin', s:'16:00', e:'18:00'},
+    {a:'Deco', s:'18:00', e:'20:00'},
+    {a:'Mosoo', s:'20:00', e:'22:00'},
+    {a:'Donelly', s:'22:00', e:'00:00'}
+  ]},
+  {id:'calypso', name:'Calypso', short:'Calypso', group:'corners', sigil:'figure', sets:[
+    {a:'Calypso Selectors', s:'15:00', e:'17:30'},
+    {a:'Emilia De La Paz', s:'17:30', e:'19:45'},
+    {a:'Gilles', s:'19:45', e:'22:00'},
+    {a:"Howlin' Soundsystem", s:'22:00', e:'00:00'}
+  ]},
+  {id:'roadshow', name:'The Roadshow', short:'Roadshow', group:'corners', sigil:'burst',
+   host:'Flora', sets:[
+    {a:'Mandana', s:'16:00', e:'17:00'},
+    {a:'Miles', s:'17:00', e:'18:00'},
+    {a:'Cherokee', s:'18:00', e:'19:00'},
+    {a:'DJ Piscine', s:'19:00', e:'20:30'},
+    {a:'Buddy95', s:'20:30', e:'22:00'}
+  ]},
+  {id:'oasis', name:'The Oasis', short:'Oasis', group:'mind', sigil:'waves', sets:[
+    {a:'Citta Holistica', sub:'GRO method', s:'15:30', e:'16:45'},
+    {a:'Monke Temple', sub:'Connected dance', s:'16:45', e:'18:00'},
+    {a:'Katrien Neyrinck', sub:'Journey through the chakras', s:'18:00', e:'19:15'},
+    {a:'More Love Events', sub:'Tantric movement', s:'19:15', e:'20:30'},
+    {a:'Beatflow', sub:'Jul-E / Andreas', s:'20:30', e:'21:30'},
+    {a:'Mika Somoza', sub:'Sound journey', s:'21:30', e:'22:30'}
+  ]},
+  {id:'orphica', name:'Orphica', short:'Orphica', group:'mind', sigil:'sun', sets:[
+    {a:'Panel talk', sub:"With What's Trending Tomorrow", s:'15:45', e:'16:15'},
+    {a:'Cre8', s:'16:25', e:'16:40'},
+    {a:'Carli Gellings', s:'16:50', e:'17:05'},
+    {a:'Briseïs', s:'17:15', e:'17:45'},
+    {a:'Ategha & Agnes', s:'17:55', e:'18:25'},
+    {a:'Joely', s:'18:35', e:'19:00'},
+    {a:'Emma & Ivana Noa', s:'19:10', e:'19:40'},
+    {a:'Sosotysha', s:'19:50', e:'20:15'},
+    {a:'Isidore & Lydia Lubs', s:'20:25', e:'21:05'},
+    {a:'Alicia Andries en Bavo Buys', s:'21:15', e:'21:45'},
+    {a:'Blue', s:'21:55', e:'22:25'}
+  ]}
+]}
 ];
 
-const DAY_START = 15*60, DAY_END = 25*60;
-const PX_MIN = 2.1, HOUR_PX = PX_MIN*60, TRACK_W = (DAY_END-DAY_START)*PX_MIN, LABEL_W = 110;
-const toMin = t => {const [h,m] = t.split(':').map(Number); return (h<6?h+24:h)*60+m};
+const PX_MIN = 2.1, HOUR_PX = PX_MIN*60, LABEL_W = 110;
+const toMin = t => {const [h,m] = t.split(':').map(Number); return (h===0&&t==='00:00'?24:(h<6?h+24:h))*60+m};
 const BY_KEY = {};
-STAGES.forEach(st => st.sets.forEach(x => {
-  x.sm = toMin(x.s); x.em = toMin(x.e); x.key = st.id+'|'+x.s; x.stage = st; BY_KEY[x.key] = x;
-}));
+DAYS.forEach(day => {
+  day.sm = toMin(day.start);
+  day.em = toMin(day.end);
+  day.stages.forEach(st => st.sets.forEach(x => {
+    x.sm = toMin(x.s); x.em = toMin(x.e);
+    x.key = day.id+'|'+st.id+'|'+x.s;
+    x.stage = st; x.day = day;
+    BY_KEY[x.key] = x;
+  }));
+});
+const trackW = day => (day.em - day.sm) * PX_MIN;
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const svg = k => '<svg class="sigil" viewBox="0 0 24 24" aria-hidden="true">'+SIGILS[k]+'</svg>';
 const fmt = m => String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
 const dur = m => m>=60 ? Math.floor(m/60)+'h'+(m%60 ? ' '+(m%60)+'m' : '') : m+'m';
 const plain = x => x.a + (x.b ? ' b2b '+x.b : '');
+const spotify = n => 'https://open.spotify.com/search/'+encodeURIComponent(n);
+const soundcloud = n => 'https://soundcloud.com/search?q='+encodeURIComponent(n);
 
 function brussels(){
   const p = new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Brussels',year:'numeric',month:'2-digit',
@@ -472,26 +618,36 @@ function brussels(){
   const g = t => +p.find(x => x.type === t).value;
   return {y:g('year'), mo:g('month'), d:g('day'), h:g('hour')%24, mi:g('minute')};
 }
-function festNow(){
-  const b = brussels(), mins = b.h*60+b.mi;
-  if(b.y===2026 && b.mo===9 && b.d===12) return {min:mins, clock:mins};
-  if(b.y===2026 && b.mo===9 && b.d===13 && b.h<6) return {min:mins+1440, clock:mins};
+function nowFor(day){
+  const b = brussels();
+  const ymd = b.y+'-'+String(b.mo).padStart(2,'0')+'-'+String(b.d).padStart(2,'0');
+  const mins = b.h*60+b.mi;
+  if(ymd === day.date) return {min:mins, clock:mins};
+  if(ymd === day.next && b.h < 6) return {min:mins+1440, clock:mins};
   return {min:null, clock:mins};
 }
+const isLive = () => { const t = nowFor(day); return t.min !== null && t.min >= day.sm && t.min < day.em };
 
 const store = {
   get(k, fb){ try{ const v = localStorage.getItem(k); return v === null ? fb : JSON.parse(v) }catch(e){ return fb } },
   set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e){} }
 };
-let picks = new Set(store.get('vv26sat', []));
+let picks = new Set(store.get('vv26sat', []).map(k => k.split('|').length === 2 ? 'sat|'+k : k));
 let view = store.get('vv26tab', 'now');
 if(!['now','grid','stages','mine'].includes(view)) view = 'now';
+
+function pickDay(){
+  const b = brussels();
+  const ymd = b.y+'-'+String(b.mo).padStart(2,'0')+'-'+String(b.d).padStart(2,'0');
+  return DAYS.find(d => d.date === ymd) || DAYS.find(d => d.next === ymd && b.h < 6) || DAYS[0];
+}
+let day = pickDay();
 let stageFilter = 'all', query = '', closed = new Set(), gridScroll = null, openKey = null;
 let scrubTime = null, dragTime = null, gridTarget = null;
 
-/* ---------------- theme ---------------- */
-const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>';
-const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2z"/></svg>';
+/* theme */
+const SUN_I = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></svg>';
+const MOON_I = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2z"/></svg>';
 const mq = window.matchMedia('(prefers-color-scheme: dark)');
 let theme = store.get('vv26theme', null);
 const effTheme = () => theme || (mq.matches ? 'dark' : 'light');
@@ -499,13 +655,18 @@ function applyTheme(){
   const e = effTheme();
   document.documentElement.setAttribute('data-theme', e);
   const btn = document.getElementById('themeBtn');
-  btn.innerHTML = e === 'dark' ? SUN : MOON;
+  btn.innerHTML = e === 'dark' ? SUN_I : MOON_I;
   btn.setAttribute('aria-label', e === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
-  document.getElementById('tc').setAttribute('content', e === 'dark' ? '#12150F' : '#FFFFFF');
+  document.getElementById('tc').setAttribute('content', e === 'dark' ? '#12140E' : '#FFFFFF');
 }
 mq.addEventListener('change', () => { if(!theme) applyTheme() });
+document.getElementById('themeBtn').addEventListener('click', () => {
+  theme = effTheme() === 'dark' ? 'light' : 'dark';
+  store.set('vv26theme', theme);
+  applyTheme();
+});
 
-/* ---------------- share ---------------- */
+/* share */
 function toast(msg){
   let el = document.getElementById('toast');
   if(!el){ el = document.createElement('div'); el.id = 'toast'; el.className = 'toast'; document.body.appendChild(el) }
@@ -516,8 +677,8 @@ function toast(msg){
 }
 document.getElementById('shareBtn').addEventListener('click', async () => {
   const data = {
-    title: 'Voodoo Village — Saturday 12 September',
-    text: 'Saturday timetable for all ten stages, with what is playing right now.',
+    title: 'Voodoo Village 2026 — weekend timetable',
+    text: 'Every stage, what is playing right now, and a plan that warns you about clashes.',
     url: location.href
   };
   try{
@@ -530,12 +691,7 @@ document.getElementById('shareBtn').addEventListener('click', async () => {
   }
 });
 
-document.getElementById('themeBtn').addEventListener('click', () => {
-  theme = effTheme() === 'dark' ? 'light' : 'dark';
-  store.set('vv26theme', theme);
-  applyTheme();
-});
-
+/* helpers */
 const tagHTML = x => x.tag ? '<span class="badge">'+esc(x.tag)+'</span>' : '';
 const nameHTML = x => esc(x.a) + (x.b ? ' <span class="b2b">b2b</span> '+esc(x.b) : '');
 const starHTML = x => {
@@ -544,17 +700,17 @@ const starHTML = x => {
     (on ? 'Remove ' : 'Save ')+esc(plain(x))+'">'+(on ? '★' : '☆')+'</button>';
 };
 
-/* ---------------- NOW ---------------- */
+/* NOW */
 function renderNow(t){
   const now = t.min;
   let h = '';
-  if(now === null) h += '<div class="note"><b>The full Saturday running order.</b> Live highlighting switches on during the festival day.</div>';
-  else if(now < DAY_START) h += '<div class="note"><b>Gates at 15:00.</b> First sets start in '+dur(DAY_START-now)+'. Here is who opens each stage.</div>';
-  else if(now >= DAY_END) h += '<div class="note"><b>Saturday is done.</b> This is how the night ran.</div>';
+  if(now === null) h += '<div class="note"><b>The full running order for '+esc(day.title)+'.</b> Live highlighting switches on during that day.</div>';
+  else if(now < day.sm) h += '<div class="note"><b>Gates at '+day.start+'.</b> First sets start in '+dur(day.sm-now)+'. Here is who opens each stage.</div>';
+  else if(now >= day.em) h += '<div class="note"><b>'+esc(day.title)+' is done.</b> This is how the night ran.</div>';
 
   GROUPS.forEach(g => {
     h += '<div class="group"><h2>'+g.label+'</h2><div class="hr"></div></div>';
-    STAGES.filter(s => s.group === g.id).forEach(st => {
+    day.stages.filter(s => s.group === g.id).forEach(st => {
       const cur = now === null ? null : st.sets.find(x => now >= x.sm && now < x.em);
       const nxt = st.sets.find(x => now === null ? true : x.sm > now);
       const finished = now !== null && now >= st.sets[st.sets.length-1].em;
@@ -577,7 +733,7 @@ function renderNow(t){
         h += '<div class="artist quiet">Finished for tonight</div>';
       }else if(nxt){
         h += '<div class="artist">'+nameHTML(nxt)+tagHTML(nxt)+'</div>';
-        const wait = now !== null && now >= DAY_START ? ' · <b>in '+dur(nxt.sm-now)+'</b>' : '';
+        const wait = now !== null && now >= day.sm ? ' · <b>in '+dur(nxt.sm-now)+'</b>' : '';
         h += '<div class="meta-line">'+nxt.s+' – '+nxt.e+wait+'</div>';
       }
       h += '</div></article>';
@@ -586,62 +742,58 @@ function renderNow(t){
   return h;
 }
 
-/* ---------------- GRID ---------------- */
+/* GRID */
 function renderGrid(t){
-  const now = t.min;
-  const live = now !== null && now >= DAY_START && now < DAY_END;
-  const nowX = live ? (now-DAY_START)*PX_MIN : null;
-
-  let h = '<div class="grid-tools"><span class="grid-hint">Swipe sideways. Bars in the same column play at the same time.</span>'+
-    (live ? '<button class="jump" id="jumpNow">Now</button>' : '')+'</div>';
-
-  h += '<div class="grid-wrap" id="gridWrap" style="--hourpx:'+HOUR_PX+'px"><div style="width:'+(LABEL_W+TRACK_W)+'px">';
-  h += '<div class="grow axis"><div class="glabel"></div><div class="gtrack" style="width:'+TRACK_W+'px">';
-  for(let m = DAY_START; m <= DAY_END; m += 60){
-    const cls = m === DAY_START ? ' first' : m === DAY_END ? ' last' : '';
-    h += '<span class="axis-tick'+cls+'" style="left:'+((m-DAY_START)*PX_MIN)+'px">'+fmt(m)+'</span>';
+  const now = t.min, live = isLive(), W = trackW(day);
+  const nowX = live ? (now-day.sm)*PX_MIN : null;
+  let h = '<div class="grid-tools"><span class="grid-hint">Swipe sideways. Bars in the same column play at the same time.</span></div>';
+  h += '<div class="grid-wrap" id="gridWrap" style="--hourpx:'+HOUR_PX+'px"><div style="width:'+(LABEL_W+W)+'px">';
+  h += '<div class="grow axis"><div class="glabel"></div><div class="gtrack" style="width:'+W+'px">';
+  for(let m = day.sm; m <= day.em; m += 60){
+    const cls = m === day.sm ? ' first' : m === day.em ? ' last' : '';
+    h += '<span class="axis-tick'+cls+'" style="left:'+((m-day.sm)*PX_MIN)+'px">'+fmt(m)+'</span>';
   }
-  if(scrubTime !== null) h += '<span class="pickflag" style="left:'+((scrubTime-DAY_START)*PX_MIN)+'px">'+fmt(scrubTime)+'</span>';
+  if(scrubTime !== null) h += '<span class="pickflag" style="left:'+((scrubTime-day.sm)*PX_MIN)+'px">'+fmt(scrubTime)+'</span>';
   if(live) h += '<span class="nowflag" style="left:'+nowX+'px">'+fmt(now)+'</span>';
   h += '</div></div>';
 
   GROUPS.forEach(g => {
     h += '<div class="gcap">'+g.label+'</div>';
-    STAGES.filter(s => s.group === g.id).forEach(st => {
+    day.stages.filter(s => s.group === g.id).forEach(st => {
       h += '<div class="grow lane"><div class="glabel">'+svg(st.sigil)+'<span>'+esc(st.short)+'</span></div>'+
-           '<div class="gtrack" style="width:'+TRACK_W+'px">';
+           '<div class="gtrack" style="width:'+W+'px">';
       st.sets.forEach(x => {
         const on = now !== null && now >= x.sm && now < x.em;
         const done = now !== null && now >= x.em;
-        const left = (x.sm-DAY_START)*PX_MIN, w = (x.em-x.sm)*PX_MIN;
+        const left = (x.sm-day.sm)*PX_MIN, w = (x.em-x.sm)*PX_MIN;
         h += '<button class="blk'+(on ? ' on' : '')+(done ? ' done' : '')+(picks.has(x.key) ? ' star' : '')+
              '" data-key="'+x.key+'" style="left:'+left+'px;width:'+(w-3)+'px">'+
              '<b>'+esc(plain(x))+'</b>'+(w > 96 ? '<i>'+x.s+'–'+x.e+'</i>' : '')+'</button>';
       });
-      if(scrubTime !== null) h += '<div class="pickline" style="left:'+((scrubTime-DAY_START)*PX_MIN)+'px"></div>';
+      if(scrubTime !== null) h += '<div class="pickline" style="left:'+((scrubTime-day.sm)*PX_MIN)+'px"></div>';
       if(live) h += '<div class="nowline" style="left:'+nowX+'px"></div>';
       h += '</div></div>';
     });
   });
   h += '</div></div>';
-  h += '<div class="note">Tap any bar for details. Red = playing right now · gold outline = your pick.</div>';
+  h += '<div class="note">Tap any bar for the artist, their style and where to hear them. Red = playing now · gold outline = your pick.</div>';
   return h;
 }
 
-/* ---------------- STAGES ---------------- */
+/* STAGES */
 function matches(x, st){
   if(!query) return true;
   const q = query.toLowerCase();
   return plain(x).toLowerCase().includes(q) || st.name.toLowerCase().includes(q) ||
-         (x.sub || '').toLowerCase().includes(q);
+         (x.sub || '').toLowerCase().includes(q) || (x.g || []).join(' ').toLowerCase().includes(q);
 }
 function renderStages(t){
   const now = t.min;
   let h = '<div class="chips"><button class="chip" data-stage="all" aria-pressed="'+(stageFilter==='all')+'">All stages</button>';
-  STAGES.forEach(s => { h += '<button class="chip" data-stage="'+s.id+'" aria-pressed="'+(stageFilter===s.id)+'">'+esc(s.short)+'</button>' });
+  day.stages.forEach(s => { h += '<button class="chip" data-stage="'+s.id+'" aria-pressed="'+(stageFilter===s.id)+'">'+esc(s.short)+'</button>' });
   h += '</div>';
   let found = 0;
-  STAGES.forEach(st => {
+  day.stages.forEach(st => {
     if(stageFilter !== 'all' && stageFilter !== st.id) return;
     const sets = st.sets.filter(x => matches(x, st));
     if(!sets.length) return;
@@ -654,7 +806,7 @@ function renderStages(t){
     sets.forEach(x => {
       const on = now !== null && now >= x.sm && now < x.em;
       const past = now !== null && now >= x.em;
-      h += '<div class="set'+(on ? ' live' : '')+(past ? ' past' : '')+'">'+
+      h += '<div class="set'+(on ? ' live' : '')+(past ? ' past' : '')+'" data-key="'+x.key+'">'+
            '<div class="set-time">'+x.s+'<span>'+x.e+'</span></div>'+
            '<div><div class="set-name">'+nameHTML(x)+tagHTML(x)+(on ? '<span class="badge now">On now</span>' : '')+'</div>'+
            (x.sub ? '<div class="set-sub">'+esc(x.sub)+'</div>' : '')+'</div>'+
@@ -662,74 +814,97 @@ function renderStages(t){
     });
     h += '</div></section>';
   });
-  if(!found) h += '<div class="empty">Nothing matches “'+esc(query)+'”.</div>';
+  if(!found) h += '<div class="empty">Nothing matches “'+esc(query)+'” on '+esc(day.tab)+'.</div>';
   return h;
 }
 
-/* ---------------- MY NIGHT ---------------- */
-function renderMine(t){
-  const now = t.min;
-  const list = [...picks].map(k => BY_KEY[k]).filter(Boolean).sort((a,b) => a.sm-b.sm);
-  if(!list.length){
-    return '<div class="empty">Your night is empty.<br><br>Tap ★ on any set — in Stages, in Now, or on a bar in Grid — and it lands here in order, with a warning whenever two picks overlap.</div>';
+/* MY NIGHT */
+function renderMine(){
+  const all = [...picks].map(k => BY_KEY[k]).filter(Boolean);
+  if(!all.length){
+    return '<div class="empty">Your plan is empty.<br><br>Tap ★ on any set — in Stages, in Now, or on a bar in Grid — and it lands here in order, with a warning whenever two picks overlap.</div>';
   }
-  const clashCount = list.filter(x => list.some(o => o !== x && o.sm < x.em && x.sm < o.em)).length;
-  let h = '<div class="note"><b>'+list.length+' sets picked.</b> '+
-    (clashCount ? clashCount+' of them overlap with another pick — flagged below.' : 'No overlaps, the whole night fits.')+'</div>';
-  list.forEach((x, i) => {
-    const on = now !== null && now >= x.sm && now < x.em;
-    const past = now !== null && now >= x.em;
-    const clashes = list.filter(o => o !== x && o.sm < x.em && x.sm < o.em);
-    const prev = list[i-1];
-    if(prev && prev.em <= x.sm && x.sm - prev.em > 0)
-      h += '<div class="gap">'+dur(x.sm - prev.em)+' free · '+esc(prev.stage.short)+' → '+esc(x.stage.short)+'</div>';
-    h += '<div class="plan-item'+(on ? ' live' : '')+(past ? ' past' : '')+'">'+
-         '<div class="set-time">'+x.s+'<span>'+x.e+'</span></div>'+
-         '<div><div class="set-name">'+nameHTML(x)+tagHTML(x)+(on ? '<span class="badge now">On now</span>' : '')+'</div>'+
-         '<div class="set-where">'+esc(x.stage.name)+'</div>'+
-         (clashes.length ? '<div class="clash">⚠ Overlaps '+clashes.map(c => esc(plain(c))+' ('+esc(c.stage.short)+')').join(', ')+'</div>' : '')+
-         '</div>'+starHTML(x)+'</div>';
+  let h = '';
+  DAYS.forEach(d => {
+    const list = all.filter(x => x.day === d).sort((a,b) => a.sm-b.sm);
+    if(!list.length) return;
+    const t = nowFor(d), now = t.min;
+    const clashCount = list.filter(x => list.some(o => o !== x && o.sm < x.em && x.sm < o.em)).length;
+    h += '<div class="group"><h2>'+esc(d.title)+'</h2><div class="hr"></div></div>';
+    h += '<div class="note"><b>'+list.length+' sets picked.</b> '+
+      (clashCount ? clashCount+' of them overlap with another pick — flagged below.' : 'No overlaps, the whole day fits.')+'</div>';
+    list.forEach((x, i) => {
+      const on = now !== null && now >= x.sm && now < x.em;
+      const past = now !== null && now >= x.em;
+      const clashes = list.filter(o => o !== x && o.sm < x.em && x.sm < o.em);
+      const prev = list[i-1];
+      if(prev && prev.em <= x.sm && x.sm - prev.em > 0)
+        h += '<div class="gap">'+dur(x.sm - prev.em)+' free · '+esc(prev.stage.short)+' → '+esc(x.stage.short)+'</div>';
+      h += '<div class="plan-item'+(on ? ' live' : '')+(past ? ' past' : '')+'" data-key="'+x.key+'">'+
+           '<div class="set-time">'+x.s+'<span>'+x.e+'</span></div>'+
+           '<div><div class="set-name">'+nameHTML(x)+tagHTML(x)+(on ? '<span class="badge now">On now</span>' : '')+'</div>'+
+           '<div class="set-where">'+esc(x.stage.name)+'</div>'+
+           (clashes.length ? '<div class="clash">⚠ Overlaps '+clashes.map(c => esc(plain(c))+' ('+esc(c.stage.short)+')').join(', ')+'</div>' : '')+
+           '</div>'+starHTML(x)+'</div>';
+    });
   });
   return h;
 }
 
-/* ---------------- sheet ---------------- */
+/* sheet */
+function linkRow(name, ig){
+  let h = '<div class="links">';
+  if(ig) h += '<a class="link" href="'+esc(ig)+'" target="_blank" rel="noopener noreferrer">'+IG_SVG+'Instagram</a>';
+  h += '<a class="link" href="'+esc(spotify(name))+'" target="_blank" rel="noopener noreferrer">'+SP_SVG+'Spotify</a>';
+  h += '<a class="link" href="'+esc(soundcloud(name))+'" target="_blank" rel="noopener noreferrer">'+SC_SVG+'SoundCloud</a>';
+  return h + '</div>';
+}
 function openSheet(key){
   const x = BY_KEY[key];
   if(!x) return;
   openKey = key;
   const on = picks.has(key);
-  const el = document.getElementById('sheet');
-  el.innerHTML =
-    '<div class="sheet" role="dialog" aria-modal="true" aria-label="'+esc(plain(x))+'">'+
+  const wellness = x.stage.group === 'mind';
+  let h = '<div class="sheet" role="dialog" aria-modal="true" aria-label="'+esc(plain(x))+'">'+
     '<div class="grab"></div>'+
-    '<div class="where">'+esc(x.stage.name)+(x.stage.host ? ' · '+esc(x.stage.host) : '')+'</div>'+
+    '<div class="where">'+esc(x.stage.name)+(x.stage.host ? ' · '+esc(x.stage.host) : '')+' · '+esc(x.day.tab)+'</div>'+
     '<h4>'+nameHTML(x)+tagHTML(x)+'</h4>'+
-    '<div class="when">'+x.s+' – '+x.e+' · '+dur(x.em-x.sm)+(x.sub ? ' · '+esc(x.sub) : '')+'</div>'+
-    '<div class="sheet-actions">'+
+    '<div class="when">'+x.s+' – '+x.e+' · '+dur(x.em-x.sm)+'</div>';
+  if(x.g) h += '<div class="genres">'+x.g.map(t => '<span class="gtag">'+esc(t)+'</span>').join('')+'</div>';
+  if(x.sub) h += '<p class="bio">'+esc(x.sub)+'</p>';
+  if(x.bio) h += '<p class="bio">'+esc(x.bio)+'</p>';
+  if(!x.bio && !x.sub && !wellness) h += '<p class="bio">No write-up for this one — the links below are the fastest way to find out.</p>';
+  if(!wellness){
+    h += '<div class="linklbl">'+(x.b ? esc(x.a) : 'Listen')+'</div>'+linkRow(x.a, x.ig);
+    if(x.b) h += '<div class="linklbl">'+esc(x.b)+'</div>'+linkRow(x.b, null);
+  }
+  h += '<div class="sheet-actions">'+
       '<button class="sheet-btn" data-close>Close</button>'+
-      '<button class="sheet-btn primary" data-pick>'+(on ? '★ In my night' : '☆ Add to my night')+'</button>'+
+      '<button class="sheet-btn primary" data-pick>'+(on ? '★ In my plan' : '☆ Add to my plan')+'</button>'+
     '</div></div>';
+  const el = document.getElementById('sheet');
+  el.innerHTML = h;
   el.hidden = false;
 }
 const closeSheet = () => { openKey = null; document.getElementById('sheet').hidden = true };
 
-/* ---------------- render ---------------- */
+/* render */
 function render(){
-  const t = festNow();
-  const live = t.min !== null && t.min >= DAY_START && t.min < DAY_END;
-  document.getElementById('pulse').hidden = !live;
-  document.getElementById('clock').innerHTML =
-    t.min === null ? 'Full timetable · Brussels time'
+  const t = nowFor(day), live = isLive();
+  document.getElementById('dayTitle').textContent = day.title;
+  const count = day.stages.reduce((n, s) => n + s.sets.length, 0);
+  document.getElementById('daySub').innerHTML =
+    '<b>'+day.stages.length+' stages</b> · <b>'+count+' sets</b> · '+day.start+' → '+day.end+' · all times Brussels';
+
+  const sb = document.getElementById('statusBtn');
+  sb.className = 'statusbtn' + (live ? ' islive' : '');
+  sb.innerHTML = t.min === null ? 'Brussels time'
     : '<span class="mono">'+fmt(t.clock)+'</span> · '+
-      (live ? 'live now' : t.min < DAY_START ? dur(DAY_START-t.min)+' to gates' : 'festival over');
+      (live ? 'live now' : t.min < day.sm ? 'in '+dur(day.sm-t.min) : 'finished');
 
   paintScrub(t, live);
-  document.getElementById('nowPill').hidden = !live;
-
-  const pip = document.getElementById('pip');
-  pip.textContent = picks.size;
-  pip.hidden = !picks.size;
+  document.getElementById('pip').textContent = picks.size;
+  document.getElementById('pip').hidden = !picks.size;
   document.getElementById('searchRow').hidden = view !== 'stages';
 
   const prevGrid = document.getElementById('gridWrap');
@@ -737,58 +912,66 @@ function render(){
 
   document.getElementById('view').innerHTML =
     view === 'now' ? renderNow(t) : view === 'grid' ? renderGrid(t) :
-    view === 'stages' ? renderStages(t) : renderMine(t);
+    view === 'stages' ? renderStages(t) : renderMine();
 
   if(view === 'grid'){
     const w = document.getElementById('gridWrap');
     if(w){
       if(gridTarget !== null){
-        w.scrollLeft = Math.max(0, (gridTarget-DAY_START)*PX_MIN - 60);
+        w.scrollLeft = Math.max(0, (gridTarget-day.sm)*PX_MIN - 60);
         gridTarget = null;
       }else{
         w.scrollLeft = gridScroll !== null ? gridScroll
-          : (live ? Math.max(0, (t.min-DAY_START)*PX_MIN - 70) : 0);
+          : (live ? Math.max(0, (t.min-day.sm)*PX_MIN - 70) : 0);
       }
     }
   }
 }
 
-/* ---------------- day scrubber ---------------- */
-const pctOf = m => Math.min(100, Math.max(0, (m-DAY_START)/(DAY_END-DAY_START)*100));
+/* scrubber */
+const pctOf = m => Math.min(100, Math.max(0, (m-day.sm)/(day.em-day.sm)*100));
 function paintScrub(t, live){
   let inner = '<div class="scrub-fill" style="width:'+(t.min === null ? 0 : pctOf(t.min))+'%"></div>';
-  for(let m = DAY_START+120; m < DAY_END; m += 120) inner += '<div class="tick" style="left:'+pctOf(m)+'%"></div>';
+  for(let m = day.sm+120; m < day.em; m += 120) inner += '<div class="tick" style="left:'+pctOf(m)+'%"></div>';
   if(scrubTime !== null) inner += '<div class="knob pick" style="left:'+pctOf(scrubTime)+'%"></div>';
   if(live) inner += '<div class="knob" style="left:'+pctOf(t.min)+'%"></div>';
   if(dragTime !== null) inner += '<div class="bubble" style="left:'+pctOf(dragTime)+'%">'+fmt(dragTime)+'</div>';
   document.getElementById('scrubTrack').innerHTML = inner;
-  const v = scrubTime !== null ? scrubTime : (t.min === null ? DAY_START : t.min);
+  let lab = '';
+  for(let m = day.sm; m <= day.em; m += 120) lab += '<span>'+String(Math.floor(m/60)%24).padStart(2,'0')+'</span>';
+  document.getElementById('scrubLabels').innerHTML = lab;
+  const v = scrubTime !== null ? scrubTime : (t.min === null ? day.sm : t.min);
   const el = document.getElementById('scrub');
+  el.setAttribute('aria-valuemin', day.sm);
+  el.setAttribute('aria-valuemax', day.em);
   el.setAttribute('aria-valuenow', Math.round(v));
   el.setAttribute('aria-valuetext', fmt(v));
 }
-function jumpTo(min){
-  scrubTime = Math.min(DAY_END, Math.max(DAY_START, min));
-  gridTarget = scrubTime;
-  gridScroll = null;
+function goGrid(){
   if(view !== 'grid') setView('grid');
   else { render(); window.scrollTo({top:0, behavior:'smooth'}) }
+}
+function jumpTo(min){
+  scrubTime = Math.min(day.em, Math.max(day.sm, min));
+  gridTarget = scrubTime;
+  gridScroll = null;
+  goGrid();
 }
 const scrubEl = document.getElementById('scrub');
 const timeAt = e => {
   const r = document.getElementById('scrubTrack').getBoundingClientRect();
   const p = Math.min(1, Math.max(0, (e.clientX - r.left)/r.width));
-  return Math.round((DAY_START + p*(DAY_END-DAY_START))/5)*5;
+  return Math.round((day.sm + p*(day.em-day.sm))/5)*5;
 };
 scrubEl.addEventListener('pointerdown', e => {
   scrubEl.setPointerCapture(e.pointerId);
   dragTime = timeAt(e);
-  paintScrub(festNow(), isLive());
+  paintScrub(nowFor(day), isLive());
 });
 scrubEl.addEventListener('pointermove', e => {
   if(dragTime === null) return;
   dragTime = timeAt(e);
-  paintScrub(festNow(), isLive());
+  paintScrub(nowFor(day), isLive());
 });
 scrubEl.addEventListener('pointerup', () => {
   if(dragTime === null) return;
@@ -797,30 +980,28 @@ scrubEl.addEventListener('pointerup', () => {
 });
 scrubEl.addEventListener('pointercancel', () => { dragTime = null; render() });
 scrubEl.addEventListener('keydown', e => {
-  const t = festNow();
-  const base = scrubTime !== null ? scrubTime : (t.min === null ? DAY_START : t.min);
+  const t = nowFor(day);
+  const base = scrubTime !== null ? scrubTime : (t.min === null ? day.sm : t.min);
   const k = e.key;
   if(k === 'Enter' || k === ' '){ e.preventDefault(); return jumpTo(base) }
   let v = null;
   if(k === 'ArrowRight' || k === 'ArrowUp') v = base + 15;
   else if(k === 'ArrowLeft' || k === 'ArrowDown') v = base - 15;
-  else if(k === 'Home') v = DAY_START;
-  else if(k === 'End') v = DAY_END;
+  else if(k === 'Home') v = day.sm;
+  else if(k === 'End') v = day.em;
   if(v === null) return;
   e.preventDefault();
   jumpTo(v);
 });
-function isLive(){ const t = festNow(); return t.min !== null && t.min >= DAY_START && t.min < DAY_END }
-document.getElementById('nowPill').addEventListener('click', () => {
-  const t = festNow();
-  if(t.min === null) return;
+document.getElementById('statusBtn').addEventListener('click', () => {
+  if(!isLive()) return;
   scrubTime = null;
-  gridTarget = t.min;
+  gridTarget = nowFor(day).min;
   gridScroll = null;
-  if(view !== 'grid') setView('grid');
-  else { render(); window.scrollTo({top:0, behavior:'smooth'}) }
+  goGrid();
 });
 
+/* navigation */
 function setView(v){
   view = v;
   store.set('vv26tab', v);
@@ -829,32 +1010,34 @@ function setView(v){
   render();
   window.scrollTo({top:0, behavior:'smooth'});
 }
+function setDay(id){
+  const d = DAYS.find(x => x.id === id);
+  if(!d || d === day) return;
+  day = d;
+  scrubTime = null; gridScroll = null; gridTarget = null;
+  stageFilter = 'all'; closed = new Set();
+  document.querySelectorAll('.dayseg button').forEach(o => o.setAttribute('aria-selected', String(o.dataset.day === id)));
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
 function togglePick(k){
   picks.has(k) ? picks.delete(k) : picks.add(k);
   store.set('vv26sat', [...picks]);
 }
-function scrollToNow(){
-  const t = festNow(), w = document.getElementById('gridWrap');
-  if(!w || t.min === null) return;
-  gridScroll = null;
-  w.scrollTo({left: Math.max(0, (t.min-DAY_START)*PX_MIN - 70), behavior:'smooth'});
-}
 
 document.querySelectorAll('.tabbar button').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
+document.querySelectorAll('.dayseg button').forEach(b => b.addEventListener('click', () => setDay(b.dataset.day)));
 document.getElementById('q').addEventListener('input', e => { query = e.target.value.trim(); render() });
 
 document.getElementById('view').addEventListener('click', e => {
   const star = e.target.closest('.star');
   if(star){ togglePick(star.dataset.key); render(); return }
-  const blk = e.target.closest('.blk');
-  if(blk){ openSheet(blk.dataset.key); return }
   const chip = e.target.closest('.chip');
   if(chip){ stageFilter = chip.dataset.stage; render(); return }
   const head = e.target.closest('[data-toggle]');
   if(head){ const id = head.dataset.toggle; closed.has(id) ? closed.delete(id) : closed.add(id); render(); return }
-  if(e.target.closest('#jumpNow')) return scrollToNow();
-  const card = e.target.closest('.card[data-key]');
-  if(card) openSheet(card.dataset.key);
+  const row = e.target.closest('[data-key]');
+  if(row) openSheet(row.dataset.key);
 });
 
 document.getElementById('sheet').addEventListener('click', e => {
@@ -864,6 +1047,7 @@ document.getElementById('sheet').addEventListener('click', e => {
 document.addEventListener('keydown', e => { if(e.key === 'Escape' && openKey) closeSheet() });
 
 document.querySelectorAll('.tabbar button').forEach(o => o.setAttribute('aria-selected', String(o.dataset.view === view)));
+document.querySelectorAll('.dayseg button').forEach(o => o.setAttribute('aria-selected', String(o.dataset.day === day.id)));
 applyTheme();
 render();
 setInterval(render, 30000);
