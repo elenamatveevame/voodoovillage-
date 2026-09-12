@@ -10,44 +10,48 @@
 <title>Voodoo Village · Saturday 12 Sep</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
   :root{
     --bg:#FFFFFF;
-    --panel:#F3F5F1;
-    --panel-2:#E9EDE6;
-    --ink:#141813;
-    --ink-2:#4A5346;
-    --ink-3:#6E7869;
-    --line:#DCE2D7;
-    --green:#2C6B42;
-    --green-soft:#EAF3EC;
-    --live:#C03A19;
-    --live-soft:#FDEDE7;
+    --panel:#F2F4EC;
+    --panel-2:#E5EADB;
+    --ink:#161A12;
+    --ink-2:#4B5343;
+    --ink-3:#6F7765;
+    --line:#DBE0D0;
+    --green:#2E6B3C;
+    --green-soft:#EBF2E6;
+    --live:#C8481B;
+    --live-soft:#FCEDE5;
     --gold:#8A6A12;
     --gold-soft:#FBF3DC;
+    --olive:#C9D96C;
+    --olive-ink:#252B07;
     --sans:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
     --mono:"IBM Plex Mono","SF Mono",Menlo,monospace;
-    --disp:"Fraunces",Georgia,"Times New Roman",serif;
+    --disp:"Zilla Slab",Georgia,"Times New Roman",serif;
     --tabh:62px;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#12150F; --panel:#1B1F17; --panel-2:#242A1F;
-      --ink:#F1F3EC; --ink-2:#BDC4B5; --ink-3:#8D9686;
-      --line:#2E3529;
-      --green:#8FC79E; --green-soft:#1E2A20;
-      --live:#FF8B5E; --live-soft:#301D14;
+      --bg:#12140E; --panel:#1B1E15; --panel-2:#252919;
+      --ink:#F2EEDF; --ink-2:#BEBCA6; --ink-3:#8C8F78;
+      --line:#2F3324;
+      --green:#A9C486; --green-soft:#1E2517;
+      --live:#F08A4B; --live-soft:#33200F;
       --gold:#D9BC6A; --gold-soft:#2A2416;
+      --olive:#C4D46A; --olive-ink:#1A1D08;
     }
   }
   :root[data-theme="dark"]{
-    --bg:#12150F; --panel:#1B1F17; --panel-2:#242A1F;
-    --ink:#F1F3EC; --ink-2:#BDC4B5; --ink-3:#8D9686;
-    --line:#2E3529;
-    --green:#8FC79E; --green-soft:#1E2A20;
-    --live:#FF8B5E; --live-soft:#301D14;
+    --bg:#12140E; --panel:#1B1E15; --panel-2:#252919;
+    --ink:#F2EEDF; --ink-2:#BEBCA6; --ink-3:#8C8F78;
+    --line:#2F3324;
+    --green:#A9C486; --green-soft:#1E2517;
+    --live:#F08A4B; --live-soft:#33200F;
     --gold:#D9BC6A; --gold-soft:#2A2416;
+    --olive:#C4D46A; --olive-ink:#1A1D08;
   }
 
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -62,11 +66,15 @@
   .wrap{max-width:480px;margin:0 auto;padding:0 16px calc(var(--tabh) + 40px + env(safe-area-inset-bottom))}
 
   /* ---------- hero ---------- */
-  .hero{padding:20px 0 14px}
-  .kicker{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
-  .hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,9vw,38px);line-height:1;
-    margin:9px 0 0;letter-spacing:-.015em}
-  .subline{margin:8px 0 0;font-size:13.5px;color:var(--ink-2)}
+  .hero{padding:22px 0 14px}
+  .mark{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--green);line-height:1.1}
+  .kicker{margin-top:5px;font-size:10.5px;font-weight:600;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--ink-3)}
+  .hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(31px,9.4vw,40px);line-height:1.02;
+    margin:14px 0 0;letter-spacing:-.01em}
+  .doublerule{margin-top:12px;height:4px;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink)}
+  .subline{margin:9px 0 0;font-size:13.5px;color:var(--ink-2)}
   .subline b{color:var(--ink);font-weight:600}
 
   /* ---------- sticky status ---------- */
@@ -79,15 +87,17 @@
     animation:pulse 2.2s ease-in-out infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.28}}
   @media (prefers-reduced-motion:reduce){.pulse{animation:none}}
+  #clock{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .icon-btn{appearance:none;border:0;background:transparent;color:var(--ink-2);width:34px;height:34px;
     border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
   .icon-btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;
     stroke-linecap:round;stroke-linejoin:round}
   .now-pill{appearance:none;border:0;background:var(--live);color:#fff;border-radius:8px;
-    padding:7px 11px;font-size:12px;font-weight:700;letter-spacing:.04em;cursor:pointer;
-    margin-left:auto;flex:none}
-  .now-pill + .icon-btn{margin-left:0}
-  .status .icon-btn:only-of-type{margin-left:auto}
+    padding:7px 11px;font-size:12px;font-weight:700;letter-spacing:.04em;cursor:pointer;flex:none}
+  .toast{position:fixed;left:50%;bottom:calc(var(--tabh) + 20px + env(safe-area-inset-bottom));
+    transform:translateX(-50%);background:var(--ink);color:var(--bg);font-size:13.5px;font-weight:600;
+    padding:11px 17px;border-radius:11px;z-index:60;box-shadow:0 6px 20px rgba(0,0,0,.28);
+    max-width:calc(100vw - 40px);text-align:center}
 
   /* ---------- day scrubber ---------- */
   .scrub{position:relative;height:30px;display:flex;align-items:center;touch-action:none;cursor:pointer}
@@ -213,8 +223,8 @@
   .stage-head{width:100%;appearance:none;background:transparent;border:0;border-bottom:2px solid var(--ink);
     display:flex;align-items:center;gap:9px;padding:6px 0 9px;margin-bottom:2px;cursor:pointer;
     color:var(--ink);text-align:left}
-  .stage-head .sigil{width:20px;height:20px}
-  .stage-head h3{margin:0;font-family:var(--disp);font-size:19px;font-weight:700;letter-spacing:-.01em}
+  .stage-head .sigil{width:32px;height:32px;padding:6px;border:1px solid var(--line);border-radius:50%}
+  .stage-head h3{margin:0;font-family:var(--disp);font-size:20px;font-weight:700;letter-spacing:-.01em}
   .stage-head .host{margin-left:auto;max-width:42%;text-align:right;line-height:1.2}
   .chev{width:15px;height:15px;flex:none;color:var(--ink-3);transition:transform .18s}
   .stage-block.closed .chev{transform:rotate(-90deg)}
@@ -232,9 +242,8 @@
   .set-sub{font-size:13px;color:var(--ink-2);margin-top:2px}
   .set-where{font-size:12.5px;color:var(--green);font-weight:600;margin-top:2px}
   .badge{display:inline-block;margin-left:6px;font-size:10px;font-weight:700;letter-spacing:.09em;
-    text-transform:uppercase;background:var(--green-soft);color:var(--green);border-radius:4px;
+    text-transform:uppercase;background:var(--olive);color:var(--olive-ink);border-radius:4px;
     padding:3px 6px;vertical-align:2px;white-space:nowrap}
-  .badge.gold{background:var(--gold-soft);color:var(--gold)}
   .badge.now{background:var(--live);color:#fff}
   .star{appearance:none;background:transparent;border:0;cursor:pointer;color:var(--ink-3);
     width:44px;height:44px;font-size:20px;line-height:1;padding:0;display:flex;
@@ -283,8 +292,10 @@
 
 <div class="wrap">
   <header class="hero">
-    <div class="kicker">Voodoo Village 2026 · Grimbergen</div>
+    <div class="mark">Voodoo Village</div>
+    <div class="kicker">Grimbergen · 11–13 September 2026</div>
     <h1>Saturday 12 September</h1>
+    <div class="doublerule"></div>
     <p class="subline"><b>10 stages</b> · <b>57 sets</b> · 15:00 → 01:00 · all times Brussels</p>
   </header>
 
@@ -292,6 +303,9 @@
     <div class="status">
       <i class="pulse" id="pulse"></i><span id="clock">Loading…</span>
       <button class="now-pill" id="nowPill" hidden>Now</button>
+      <button class="icon-btn" id="shareBtn" aria-label="Share this timetable">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.2" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.8" r="2.6"/><path d="M8.3 10.7 15.7 6.5M8.3 13.3l7.4 4.2"/></svg>
+      </button>
       <button class="icon-btn" id="themeBtn" aria-label="Switch theme"></button>
     </div>
     <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Jump to a time of day"
@@ -490,13 +504,39 @@ function applyTheme(){
   document.getElementById('tc').setAttribute('content', e === 'dark' ? '#12150F' : '#FFFFFF');
 }
 mq.addEventListener('change', () => { if(!theme) applyTheme() });
+
+/* ---------------- share ---------------- */
+function toast(msg){
+  let el = document.getElementById('toast');
+  if(!el){ el = document.createElement('div'); el.id = 'toast'; el.className = 'toast'; document.body.appendChild(el) }
+  el.textContent = msg;
+  el.hidden = false;
+  clearTimeout(el.timer);
+  el.timer = setTimeout(() => { el.hidden = true }, 2400);
+}
+document.getElementById('shareBtn').addEventListener('click', async () => {
+  const data = {
+    title: 'Voodoo Village — Saturday 12 September',
+    text: 'Saturday timetable for all ten stages, with what is playing right now.',
+    url: location.href
+  };
+  try{
+    if(navigator.share){ await navigator.share(data); return }
+    await navigator.clipboard.writeText(location.href);
+    toast('Link copied');
+  }catch(err){
+    if(err && err.name === 'AbortError') return;
+    toast('Copy the link from the address bar');
+  }
+});
+
 document.getElementById('themeBtn').addEventListener('click', () => {
   theme = effTheme() === 'dark' ? 'light' : 'dark';
   store.set('vv26theme', theme);
   applyTheme();
 });
 
-const tagHTML = x => x.tag ? '<span class="badge'+(x.tag==='Live'?'':' gold')+'">'+esc(x.tag)+'</span>' : '';
+const tagHTML = x => x.tag ? '<span class="badge">'+esc(x.tag)+'</span>' : '';
 const nameHTML = x => esc(x.a) + (x.b ? ' <span class="b2b">b2b</span> '+esc(x.b) : '');
 const starHTML = x => {
   const on = picks.has(x.key);
@@ -681,7 +721,7 @@ function render(){
   document.getElementById('pulse').hidden = !live;
   document.getElementById('clock').innerHTML =
     t.min === null ? 'Full timetable · Brussels time'
-    : '<span class="mono">'+fmt(t.clock)+'</span> Brussels · '+
+    : '<span class="mono">'+fmt(t.clock)+'</span> · '+
       (live ? 'live now' : t.min < DAY_START ? dur(DAY_START-t.min)+' to gates' : 'festival over');
 
   paintScrub(t, live);
